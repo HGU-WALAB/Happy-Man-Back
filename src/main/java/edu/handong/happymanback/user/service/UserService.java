@@ -1,7 +1,6 @@
 package edu.handong.happymanback.user.service;
 
 import edu.handong.happymanback.user.domain.User;
-import edu.handong.happymanback.user.dto.UserDto;
 import edu.handong.happymanback.user.dto.UserForm;
 import edu.handong.happymanback.user.exception.PersonalIdDuplicateException;
 import edu.handong.happymanback.user.repository.UserRepository;
@@ -9,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,9 +32,14 @@ public class UserService {
         return saved.getId();
     }
 
-    public Long modifyUser(Long key, UserForm form) {
-        Optional<User> user = userRepository.findById(key);
-        return user.get().update(form);
+    public Long modifyUser(Long id, UserForm form) {
+        Optional<User> userOptional = userRepository.findById(id);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            return user.update(form);
+        } else {
+            throw new IllegalArgumentException("User not found with id: " + id);
+        }
     }
 
     public Long deleteUser(Long key) {
@@ -49,6 +52,11 @@ public class UserService {
     }
 
     public User getUser(Long id){
-        return userRepository.findById(id).get();
+        Optional<User> userOptional = userRepository.findById(id);
+        if (userOptional.isPresent()) {
+            return userOptional.get();
+        } else {
+            throw new IllegalArgumentException("User not found with id: " + id);
+        }
     }
 }
