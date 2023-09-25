@@ -39,7 +39,6 @@ public class User extends BaseTime {
         user.setName(form.getName());
         user.setPersonalId(form.getPersonalId());
         user.setDepartment(form.getDepartment());
-        user.setAuthority(form.getAuthority());
         user.setPassword(form.getPassword());
         user.setEmail(form.getEmail());
         return user;
@@ -47,7 +46,6 @@ public class User extends BaseTime {
 
     public String update(UserForm form) {
         this.name = form.getName() != null ? form.getName() : name;
-        this.personalId = form.getPersonalId() != null ? form.getPersonalId() : personalId;
         this.department = form.getDepartment() != null ? form.getDepartment() : department;
         this.password = form.getPassword() != null ? form.getPassword() : password;
         this.authority = form.getAuthority() != null ? form.getAuthority() : authority;
