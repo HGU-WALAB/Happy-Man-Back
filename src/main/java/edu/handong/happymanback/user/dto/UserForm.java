@@ -1,5 +1,6 @@
 package edu.handong.happymanback.user.dto;
 
+import edu.handong.happymanback.user.domain.Authority;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,5 +12,6 @@ public class UserForm {
     private String personalId;
     private String password;
     private String department;
-    private String role;
+    private Authority authority;
+    private String email;
 }

@@ -16,42 +16,43 @@ import lombok.Setter;
 public class User extends BaseTime {
 
     @Id
-    @Column(name="user_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(nullable = false, length = 20)
-    private String name;
-
-    @Column(nullable = false, length = 12,unique = true)
+    @Column(name="personal_id")
     private String personalId;
 
     @Column(nullable = false, length = 30)
     private String password;
 
+    @Column(nullable = false, length = 20)
+    private String name;
+
+    @Enumerated(EnumType.STRING)
+    private Authority authority=Authority.USER;
+
     @Column(nullable = false, length = 40)
     private String department;
 
-    @Column(nullable = false, length = 10)
-    private String role;
+    @Column(nullable = false, length = 30)
+    private String email;
 
     public static User createUser(UserForm form) {
         User user = new User();
         user.setName(form.getName());
         user.setPersonalId(form.getPersonalId());
         user.setDepartment(form.getDepartment());
-        user.setRole(form.getRole());
+        user.setAuthority(form.getAuthority());
         user.setPassword(form.getPassword());
+        user.setEmail(form.getEmail());
         return user;
     }
 
-    public Long update(UserForm form) {
+    public String update(UserForm form) {
         this.name = form.getName() != null ? form.getName() : name;
         this.personalId = form.getPersonalId() != null ? form.getPersonalId() : personalId;
         this.department = form.getDepartment() != null ? form.getDepartment() : department;
         this.password = form.getPassword() != null ? form.getPassword() : password;
-        this.role = form.getRole() != null ? form.getRole() : role;
-        return id;
+        this.authority = form.getAuthority() != null ? form.getAuthority() : authority;
+        this.email = form.getEmail() != null ? form.getEmail() : email;
+        return personalId;
     }
 
 }

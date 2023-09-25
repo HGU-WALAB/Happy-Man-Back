@@ -22,17 +22,17 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public Long join(UserForm form) {
+    public String join(UserForm form) {
         userRepository.findByPersonalId(form.getPersonalId())
                 .ifPresent(m->{
                     throw new PersonalIdDuplicateException();
                 });
         User user = User.createUser(form);
         User saved = userRepository.save(user);
-        return saved.getId();
+        return saved.getPersonalId();
     }
 
-    public Long modifyUser(Long id, UserForm form) {
+    public String modifyUser(Long id, UserForm form) {
         Optional<User> userOptional = userRepository.findById(id);
         if (userOptional.isPresent()) {
             User user = userOptional.get();

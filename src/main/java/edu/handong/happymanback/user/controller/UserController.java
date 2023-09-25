@@ -21,17 +21,17 @@ public class UserController {
         this.userService=userService;
     }
     @PostMapping
-    public ResponseEntity<Map<String, Long>> joinUser(@RequestBody UserForm form) {
-        Long joinId = userService.join(form);
+    public ResponseEntity<Map<String, String>> joinUser(@RequestBody UserForm form) {
+        String joinId = userService.join(form);
         return ResponseEntity.created(
                 URI.create("/api/happyman/user/" + joinId)
         ).body(Map.of("id", joinId));
     }
 
     @PatchMapping("{id}")
-    public ResponseEntity<Map<String, Long>> modifyUser(@PathVariable("id")Long id,@RequestBody UserForm form) {
-        Long modifyId = userService.modifyUser(id,form);
-        return ResponseEntity.ok().body(Map.of("id",modifyId));
+    public ResponseEntity<Map<String, String>> modifyUser(@PathVariable("id")Long id,@RequestBody UserForm form) {
+        String modifyId = userService.modifyUser(id,form);
+        return ResponseEntity.ok().body(Map.of("personal id",modifyId));
     }
 
     @GetMapping

@@ -9,9 +9,8 @@ import java.util.List;
 @Builder
 public class UserDto {
     public static class Info {
-        private Long id=0L;
-        private String name = null;
         private String personalId = null;
+        private String name = null;
         private String department = null;
         private String password=null;
         private String role="student";
