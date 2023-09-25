@@ -34,7 +34,7 @@ public class User extends BaseTime {
     @Column(nullable = false, length = 30)
     private String email;
 
-    public static User createUser(UserForm form) {
+    public static User create(UserForm form) {
         User user = new User();
         user.setName(form.getName());
         user.setPersonalId(form.getPersonalId());
@@ -50,7 +50,7 @@ public class User extends BaseTime {
         this.password = form.getPassword() != null ? form.getPassword() : password;
         this.authority = form.getAuthority() != null ? form.getAuthority() : authority;
         this.email = form.getEmail() != null ? form.getEmail() : email;
-        return personalId;
+        return this.personalId;
     }
 
 }

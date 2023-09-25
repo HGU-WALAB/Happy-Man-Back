@@ -27,7 +27,7 @@ public class UserService {
                 .ifPresent(m->{
                     throw new PersonalIdDuplicateException();
                 });
-        User user = User.createUser(form);
+        User user = User.create(form);
         User saved = userRepository.save(user);
         return saved.getPersonalId();
     }
