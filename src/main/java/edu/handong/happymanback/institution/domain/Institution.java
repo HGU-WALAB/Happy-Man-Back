@@ -1,5 +1,6 @@
 package edu.handong.happymanback.institution.domain;
 
+import edu.handong.happymanback.institution.dto.InstitutionForm;
 import edu.handong.happymanback.utils.BaseTime;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -22,5 +23,19 @@ public class Institution extends BaseTime {
 
     @Column(nullable = false, length = 60)
     private String description;
+
+    public static Institution createInstitution(InstitutionForm form){
+        Institution institution=new Institution();
+        institution.setName(form.getName());
+        institution.setDescription(form.getDescription());
+        return institution;
+    }
+
+    public Long update(InstitutionForm form){
+        this.name = form.getName() != null ? form.getName() : name;
+        this.description = form.getDescription() != null ? form.getDescription() : description;
+        return id;
+    }
+
 
 }
