@@ -21,38 +21,38 @@ public class EventService {
         this.eventRepository = eventRepository;
     }
 
-    public List<Event> campList(){
+    public List<Event> eventList(){
         return eventRepository.findAll();
     }
 
-    public Event getCamp(Long id){
-        Optional<Event> campOptional= eventRepository.findById(id);
-        if(campOptional.isPresent()){
-            return campOptional.get();
+    public Event getEvent(Long id){
+        Optional<Event> eventOptional= eventRepository.findById(id);
+        if(eventOptional.isPresent()){
+            return eventOptional.get();
         }else{
-            throw new IllegalArgumentException("Camp not found with id: " + id);
+            throw new IllegalArgumentException("Event not found with id: " + id);
         }
     }
 
-    public Long createCamp(Institution institution, EventForm form){
+    public Long createEvent(Institution institution, EventForm form){
         Event event = Event.create(institution,form);
         Event saved= eventRepository.save(event);
         return saved.getId();
     }
 
-    public Long deleteCamp(Long id){
+    public Long deleteEvent(Long id){
         eventRepository.deleteById(id);
         return id;
     }
 
-    public Long modifyCamp(Long id, EventForm form){
-        Optional<Event> campOptional = eventRepository.findById(id);
+    public Long modifyEvent(Long id, EventForm form){
+        Optional<Event> eventOptional = eventRepository.findById(id);
 
-        if (campOptional.isPresent()) {
-            Event event = campOptional.get();
+        if (eventOptional.isPresent()) {
+            Event event = eventOptional.get();
             return event.update(form);
         } else {
-            throw new IllegalArgumentException("Camp not found with id: " + id);
+            throw new IllegalArgumentException("Event not found with id: " + id);
         }
 
     }

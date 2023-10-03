@@ -2,7 +2,6 @@ package edu.handong.happymanback.event.domain;
 
 import edu.handong.happymanback.institution.domain.Institution;
 import edu.handong.happymanback.utils.BaseTime;
-import edu.handong.happymanback.utils.CertificateType;
 import jakarta.persistence.*;
 import edu.handong.happymanback.event.dto.EventForm;
 import jakarta.persistence.Entity;
@@ -10,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+//전체적인 수정 필요!!!!!!!!!!!!
 @NoArgsConstructor
 @Entity
 @Getter
@@ -33,8 +33,6 @@ public class Event extends BaseTime{
     private String content;
 
     @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private CertificateType certificateType;
 
 
     /*기관 관련 세팅 수정 필요!*/
@@ -44,7 +42,6 @@ public class Event extends BaseTime{
         event.setName(form.getName());
         event.setImage(form.getImage());
         event.setContent(form.getContent());
-        event.setCertificateType(form.getCertificateType());
         return event;
     }
 
@@ -52,7 +49,6 @@ public class Event extends BaseTime{
     public Long update(EventForm form) {
         this.name = form.getName() != null ? form.getName() : name;
         this.content = form.getContent() != null ? form.getContent() : content;
-        this.certificateType = form.getCertificateType() != null ? form.getCertificateType() : certificateType;
         this.image = form.getImage() != null ? form.getImage() : image;
         return id;
     }

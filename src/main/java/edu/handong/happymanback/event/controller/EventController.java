@@ -27,33 +27,33 @@ public class EventController {
     }
 
     @PostMapping
-    public ResponseEntity<Map<String,Long>> createCamp(@RequestBody EventForm form){
+    public ResponseEntity<Map<String,Long>> createEvent(@RequestBody EventForm form){
         Institution institution=institutionService.getInstitution(form.getInstitutionId());
-        Long createdId= eventService.createCamp(institution,form);
+        Long createdId= eventService.createEvent(institution,form);
         return ResponseEntity.created(
-                URI.create("/api/happyman/camp/" + createdId)
+                URI.create("/api/happyman/event/" + createdId)
         ).body(Map.of("id", createdId));
     }
 
     @PatchMapping("{id}")
-    public ResponseEntity<Map<String,Long>> modifyCamp(@PathVariable("id")Long id,@RequestBody EventForm form){
-        Long modifyId= eventService.modifyCamp(id, form);
+    public ResponseEntity<Map<String,Long>> modifyEvent(@PathVariable("id")Long id,@RequestBody EventForm form){
+        Long modifyId= eventService.modifyEvent(id, form);
         return ResponseEntity.ok().body(Map.of("id",modifyId));
     }
 
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Map<String, Long>> deleteCamp(@PathVariable("id")Long id){
-        return ResponseEntity.ok().body(Map.of("id", eventService.deleteCamp(id)));
+    public ResponseEntity<Map<String, Long>> deleteEvent(@PathVariable("id")Long id){
+        return ResponseEntity.ok().body(Map.of("id", eventService.deleteEvent(id)));
     }
 
     @GetMapping
-    public ResponseEntity<List<Event>> campList(){
-        return ResponseEntity.ok().body(eventService.campList());
+    public ResponseEntity<List<Event>> eventList(){
+        return ResponseEntity.ok().body(eventService.eventList());
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Event> camp(@PathVariable("id")Long id){
-        return ResponseEntity.ok().body(eventService.getCamp(id));
+    public ResponseEntity<Event> getEvent(@PathVariable("id")Long id){
+        return ResponseEntity.ok().body(eventService.getEvent(id));
     }
 }
