@@ -31,7 +31,7 @@ public class InstitutionController {
     @PatchMapping("{id}")
     public ResponseEntity<Map<String, Long>> modifyInstitution(@PathVariable("id")Long id,@RequestBody InstitutionForm form) {
         Long modifyPersonalId = institutionService.modifyInstitution(id,form);
-        return ResponseEntity.ok().body(Map.of("personal id",modifyPersonalId));
+        return ResponseEntity.ok().body(Map.of("institution id",modifyPersonalId));
     }
 
     @GetMapping
@@ -46,6 +46,6 @@ public class InstitutionController {
 
     @DeleteMapping("{id}")
     public ResponseEntity<Map<String, Long>> deleteInstitution(@PathVariable("id")Long id){
-        return ResponseEntity.ok().body(Map.of("id",institutionService.deleteInstitution(id)));
+        return ResponseEntity.ok().body(Map.of("institution id",institutionService.deleteInstitution(id)));
     }
 }

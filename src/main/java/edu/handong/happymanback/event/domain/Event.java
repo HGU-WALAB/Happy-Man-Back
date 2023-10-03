@@ -38,8 +38,9 @@ public class Event extends BaseTime{
 
 
     /*기관 관련 세팅 수정 필요!*/
-    public static Event create(EventForm form){
+    public static Event create(Institution institution, EventForm form){
         Event event = new Event();
+        event.setInstitution(institution);
         event.setName(form.getName());
         event.setImage(form.getImage());
         event.setContent(form.getContent());
