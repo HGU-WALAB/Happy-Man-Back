@@ -23,40 +23,40 @@ public class UserService {
     }
 
     public String join(UserForm form) {
-        userRepository.findByPersonalId(form.getPersonalId())
+        userRepository.findById(form.getPersonalId())
                 .ifPresent(m->{
                     throw new PersonalIdDuplicateException();
                 });
-        User user = User.createUser(form);
+        User user = User.create(form);
         User saved = userRepository.save(user);
         return saved.getPersonalId();
     }
 
-    public String modifyUser(Long id, UserForm form) {
-        Optional<User> userOptional = userRepository.findById(id);
+    public String modifyUser(String personalId, UserForm form) {
+        Optional<User> userOptional = userRepository.findById(personalId);
         if (userOptional.isPresent()) {
             User user = userOptional.get();
             return user.update(form);
         } else {
-            throw new IllegalArgumentException("User not found with id: " + id);
+            throw new IllegalArgumentException("User not found with id: " + personalId);
         }
     }
 
-    public Long deleteUser(Long key) {
-        userRepository.deleteById(key);
-        return key;
+    public String deleteUser(String personalId) {
+        userRepository.deleteById(personalId);
+        return personalId;
     }
 
     public List<User> userList(){
         return userRepository.findAll();
     }
 
-    public User getUser(Long id){
-        Optional<User> userOptional = userRepository.findById(id);
+    public User getUser(String personalId){
+        Optional<User> userOptional = userRepository.findById(personalId);
         if (userOptional.isPresent()) {
             return userOptional.get();
         } else {
-            throw new IllegalArgumentException("User not found with id: " + id);
+            throw new IllegalArgumentException("User not found with id: " + personalId);
         }
     }
 }

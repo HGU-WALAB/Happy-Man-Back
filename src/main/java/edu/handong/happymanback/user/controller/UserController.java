@@ -28,10 +28,10 @@ public class UserController {
         ).body(Map.of("id", joinId));
     }
 
-    @PatchMapping("{id}")
-    public ResponseEntity<Map<String, String>> modifyUser(@PathVariable("id")Long id,@RequestBody UserForm form) {
-        String modifyId = userService.modifyUser(id,form);
-        return ResponseEntity.ok().body(Map.of("personal id",modifyId));
+    @PatchMapping("{personalId}")
+    public ResponseEntity<Map<String, String>> modifyUser(@PathVariable("personalId")String personalId,@RequestBody UserForm form) {
+        String modifyPersonalId = userService.modifyUser(personalId,form);
+        return ResponseEntity.ok().body(Map.of("personal id",modifyPersonalId));
     }
 
     @GetMapping
@@ -39,14 +39,14 @@ public class UserController {
         return ResponseEntity.ok().body(userService.userList());
     }
 
-    @GetMapping("{id}")
-    public ResponseEntity<User> user(@PathVariable("id")Long id){
-        return ResponseEntity.ok().body(userService.getUser(id));
+    @GetMapping("{personalId}")
+    public ResponseEntity<User> user(@PathVariable("personalId")String personalId){
+        return ResponseEntity.ok().body(userService.getUser(personalId));
     }
 
-    @DeleteMapping("{id}")
-    public ResponseEntity<Map<String, Long>> deleteUser(@PathVariable("id")Long id){
-        return ResponseEntity.ok().body(Map.of("id",userService.deleteUser(id)));
+    @DeleteMapping("{personalId}")
+    public ResponseEntity<Map<String, String>> deleteUser(@PathVariable("personalId")String personalId){
+        return ResponseEntity.ok().body(Map.of("id",userService.deleteUser(personalId)));
     }
 
 }

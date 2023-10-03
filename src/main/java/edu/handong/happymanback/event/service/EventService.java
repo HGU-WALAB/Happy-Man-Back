@@ -3,6 +3,7 @@ package edu.handong.happymanback.event.service;
 import edu.handong.happymanback.event.domain.Event;
 import edu.handong.happymanback.event.dto.EventForm;
 import edu.handong.happymanback.event.repository.EventRepository;
+import edu.handong.happymanback.institution.domain.Institution;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,8 +34,8 @@ public class EventService {
         }
     }
 
-    public Long createCamp(EventForm form){
-        Event event = Event.create(form);
+    public Long createCamp(Institution institution, EventForm form){
+        Event event = Event.create(institution,form);
         Event saved= eventRepository.save(event);
         return saved.getId();
     }

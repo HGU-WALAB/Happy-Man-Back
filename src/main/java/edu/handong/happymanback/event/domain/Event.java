@@ -2,6 +2,7 @@ package edu.handong.happymanback.event.domain;
 
 import edu.handong.happymanback.institution.domain.Institution;
 import edu.handong.happymanback.utils.BaseTime;
+import edu.handong.happymanback.utils.CertificateType;
 import jakarta.persistence.*;
 import edu.handong.happymanback.event.dto.EventForm;
 import jakarta.persistence.Entity;
@@ -31,17 +32,19 @@ public class Event extends BaseTime{
 
     private String content;
 
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private EventCategory eventCategory;
+    private CertificateType certificateType;
 
 
     /*기관 관련 세팅 수정 필요!*/
-    public static Event create(EventForm form){
+    public static Event create(Institution institution, EventForm form){
         Event event = new Event();
+        event.setInstitution(institution);
         event.setName(form.getName());
         event.setImage(form.getImage());
         event.setContent(form.getContent());
-        event.setEventCategory(form.getEventCategory());
+        event.setCertificateType(form.getCertificateType());
         return event;
     }
 
@@ -49,7 +52,7 @@ public class Event extends BaseTime{
     public Long update(EventForm form) {
         this.name = form.getName() != null ? form.getName() : name;
         this.content = form.getContent() != null ? form.getContent() : content;
-        this.eventCategory = form.getEventCategory() != null ? form.getEventCategory() : eventCategory;
+        this.certificateType = form.getCertificateType() != null ? form.getCertificateType() : certificateType;
         this.image = form.getImage() != null ? form.getImage() : image;
         return id;
     }

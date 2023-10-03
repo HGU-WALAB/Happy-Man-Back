@@ -1,6 +1,6 @@
 package edu.handong.happymanback.event.dto;
 
-import edu.handong.happymanback.event.domain.EventCategory;
+import edu.handong.happymanback.utils.CertificateType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,5 +13,5 @@ public class EventForm {
     private String name;
     private String image;
     private String content;
-    private EventCategory eventCategory;
+    private CertificateType certificateType;
 }
