@@ -1,4 +1,4 @@
-package edu.handong.happymanback.user.domain;
+package edu.handong.happymanback.utils.enums;
 
 public enum Authority {
     MASTER, ADMIN, USER
