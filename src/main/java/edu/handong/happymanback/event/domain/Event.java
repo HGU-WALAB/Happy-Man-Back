@@ -2,6 +2,7 @@ package edu.handong.happymanback.event.domain;
 
 import edu.handong.happymanback.institution.domain.Institution;
 import edu.handong.happymanback.utils.BaseTime;
+import edu.handong.happymanback.utils.enums.Semester;
 import jakarta.persistence.*;
 import edu.handong.happymanback.event.dto.EventForm;
 import jakarta.persistence.Entity;
@@ -9,7 +10,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-//전체적인 수정 필요!!!!!!!!!!!!
+import java.time.LocalDate;
+
 @NoArgsConstructor
 @Entity
 @Getter
@@ -21,35 +23,65 @@ public class Event extends BaseTime{
     @Column(name="event_id")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="institution_id")
     private Institution institution;
 
-    @Column(nullable = false, length = 30)
+    @Column(nullable = false, length = 40)
     private String name;
+
+    @Column(length = 20)
+    private String manager;
+
+    @Column(nullable = false,length = 10)
+    private String year;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Semester semester;
 
     private String image;
 
-    private String content;
+    private LocalDate applicationDate;
 
     @Column(nullable = false)
+    private LocalDate startDate;
 
+    @Column(nullable = false)
+    private LocalDate endDate;
 
-    /*기관 관련 세팅 수정 필요!*/
+    @Column(columnDefinition = "text")
+    private String content;
+
+    private LocalDate certificateIssueDate;
+
     public static Event create(Institution institution, EventForm form){
         Event event = new Event();
         event.setInstitution(institution);
         event.setName(form.getName());
+        event.setManager(form.getManager());
+        event.setYear(form.getYear());
+        event.setSemester(form.getSemester());
         event.setImage(form.getImage());
+        event.setApplicationDate((form.getApplicationDate()));
+        event.setStartDate(form.getStartDate());
+        event.setEndDate(form.getEndDate());
         event.setContent(form.getContent());
+        event.setCertificateIssueDate(form.getCertificateIssueDate());
         return event;
     }
 
-    /*기관 관련 세팅 수정 필요!*/
     public Long update(EventForm form) {
-        this.name = form.getName() != null ? form.getName() : name;
-        this.content = form.getContent() != null ? form.getContent() : content;
-        this.image = form.getImage() != null ? form.getImage() : image;
+        this.name = form.getName() != null ? form.getName() : this.name;
+        this.manager = form.getManager() != null ? form.getManager() : this.manager;
+        this.year = form.getYear() != null ? form.getYear() : this.year;
+        this.semester = form.getSemester() != null ? form.getSemester() : this.semester;
+        this.image = form.getImage() != null ? form.getImage() : this.image;
+        this.applicationDate = form.getApplicationDate() != null ? form.getApplicationDate() : this.applicationDate;
+        this.startDate = form.getStartDate() != null ? form.getStartDate() : this.startDate;
+        this.endDate = form.getEndDate() != null ? form.getEndDate() : this.endDate;
+        this.content = form.getContent() != null ? form.getContent() : this.content;
+        this.certificateIssueDate = form.getCertificateIssueDate() != null ? form.getCertificateIssueDate() : this.certificateIssueDate;
         return id;
     }
 }

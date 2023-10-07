@@ -1,8 +1,11 @@
 package edu.handong.happymanback.event.dto;
 
+import edu.handong.happymanback.utils.enums.Semester;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -10,6 +13,13 @@ import lombok.Setter;
 public class EventForm {
     private Long institutionId;
     private String name;
+    private String manager;
+    private String year;
+    private Semester semester;
     private String image;
+    private LocalDate applicationDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
     private String content;
+    private LocalDate certificateIssueDate;
 }

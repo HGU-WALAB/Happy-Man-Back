@@ -1,6 +1,6 @@
 package edu.handong.happymanback.user.dto;
 
-import edu.handong.happymanback.user.domain.Authority;
+import edu.handong.happymanback.utils.enums.Authority;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;

@@ -1,6 +1,6 @@
 package edu.handong.happymanback.institution.controller;
 
-import edu.handong.happymanback.institution.domain.Institution;
+import edu.handong.happymanback.institution.dto.InstitutionDto;
 import edu.handong.happymanback.institution.dto.InstitutionForm;
 import edu.handong.happymanback.institution.service.InstitutionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@CrossOrigin("http://localhost:8080")
+@CrossOrigin("http://localhost:3000")
 @RequestMapping("/api/happyman/institution")
 public class InstitutionController {
 
@@ -35,12 +35,12 @@ public class InstitutionController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Institution>> institutionList(){
+    public ResponseEntity<List<InstitutionDto>> institutionList(){
         return ResponseEntity.ok().body(institutionService.institutionList());
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Institution> institution(@PathVariable("id")Long id){
+    public ResponseEntity<InstitutionDto> institution(@PathVariable("id")Long id){
         return ResponseEntity.ok().body(institutionService.getInstitution(id));
     }
 

@@ -2,6 +2,7 @@ package edu.handong.happymanback.user.domain;
 
 import edu.handong.happymanback.user.dto.UserForm;
 import edu.handong.happymanback.utils.BaseTime;
+import edu.handong.happymanback.utils.enums.Authority;
 import jakarta.persistence.*;
 import jakarta.persistence.Entity;
 import lombok.Getter;
