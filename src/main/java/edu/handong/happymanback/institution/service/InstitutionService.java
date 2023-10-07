@@ -1,6 +1,7 @@
 package edu.handong.happymanback.institution.service;
 
 import edu.handong.happymanback.institution.domain.Institution;
+import edu.handong.happymanback.institution.dto.InstitutionDto;
 import edu.handong.happymanback.institution.dto.InstitutionForm;
 import edu.handong.happymanback.institution.repository.InstitutionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -40,14 +42,17 @@ public class InstitutionService {
         return id;
     }
 
-    public List<Institution> institutionList(){
-        return institutionRepository.findAll();
+    public List<InstitutionDto> institutionList(){
+        return institutionRepository.findAll()
+                .stream()
+                .map(InstitutionDto::new)
+                .collect(Collectors.toList());
     }
 
-    public Institution getInstitution(Long id){
+    public InstitutionDto getInstitution(Long id){
         Optional<Institution> institutionOptional = institutionRepository.findById(id);
         if (institutionOptional.isPresent()) {
-            return institutionOptional.get();
+            return new InstitutionDto(institutionOptional.get());
         } else {
             throw new IllegalArgumentException("Institution not found with id: " + id);
         }
