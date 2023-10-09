@@ -1,6 +1,5 @@
 package edu.handong.happymanback.user.controller;
 
-import edu.handong.happymanback.user.domain.User;
 import edu.handong.happymanback.user.dto.UserDto;
 import edu.handong.happymanback.user.dto.UserForm;
 import edu.handong.happymanback.user.service.UserService;
@@ -8,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -35,12 +33,12 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<List<User>> userList(){
+    public ResponseEntity<UserDto> userList(){
         return ResponseEntity.ok().body(userService.userList());
     }
 
     @GetMapping("{personalId}")
-    public ResponseEntity<User> user(@PathVariable("personalId")String personalId){
+    public ResponseEntity<UserDto.Info> user(@PathVariable("personalId")String personalId){
         return ResponseEntity.ok().body(userService.getUser(personalId));
     }
 

@@ -1,20 +1,28 @@
 package edu.handong.happymanback.user.dto;
 
-import lombok.Builder;
+import edu.handong.happymanback.user.domain.User;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+@AllArgsConstructor
 @Getter
-@Builder
 public class UserDto {
-    public static class Info {
-        private String personalId = null;
-        private String name = null;
-        private String department = null;
-        private String password=null;
-        private String role="student";
-    }
 
-    private List<Info> user;
+    private List<Info> infoList;
+
+    @Getter
+    @NoArgsConstructor
+    public static class Info {
+        private String personalId;
+        private String name;
+        private String department;
+        public Info(User user){
+            this.personalId=user.getPersonalId();
+            this.name=user.getName();
+            this.department=user.getName();
+        }
+    }
 }
