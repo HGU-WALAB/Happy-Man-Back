@@ -27,7 +27,7 @@ public class EventService {
     }
 
     public EventDto eventList(){
-        List<EventDto.EventSimple> events=eventRepository.findAll()
+        List<EventDto.EventSimple> events=eventRepository.findSimpleList()
                 .stream()
                 .map(EventDto.EventSimple::new)
                 .collect(Collectors.toList());
@@ -69,6 +69,5 @@ public class EventService {
         } else {
             throw new IllegalArgumentException("Event not found with id: " + id);
         }
-
     }
 }
