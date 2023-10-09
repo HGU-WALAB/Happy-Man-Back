@@ -17,7 +17,7 @@ import lombok.Setter;
 public class User extends BaseTime {
 
     @Id
-    @Column(name="personal_id")
+    @Column(name="personal_id",length = 30)
     private String personalId;
 
     @Column(nullable = false, length = 30)
