@@ -20,9 +20,11 @@ public class ParticipantDto {
     @Getter
     @NoArgsConstructor
     public static class Info {
+        private Long id;
         private State state;
         private UserDto.Info student;
         public Info(Participant participant){
+            this.id=participant.getId();
             this.state=participant.getState();
             this.student=new UserDto.Info(participant.getStudent());
         }
