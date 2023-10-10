@@ -17,8 +17,8 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 public class EventService {
-    public final EventRepository eventRepository;
-    public final InstitutionRepository institutionRepository;
+    private final EventRepository eventRepository;
+    private final InstitutionRepository institutionRepository;
 
     @Autowired
     public EventService(EventRepository eventRepository,InstitutionRepository institutionRepository) {
@@ -34,10 +34,10 @@ public class EventService {
         return new EventDto(events);
     }
 
-    public Event getEvent(Long id){
+    public EventDto.EventDetail getEvent(Long id){
         Optional<Event> eventOptional= eventRepository.findById(id);
         if(eventOptional.isPresent()){
-            return eventOptional.get();
+            return new EventDto.EventDetail(eventOptional.get());
         }else{
             throw new IllegalArgumentException("Event not found with id: " + id);
         }
@@ -62,10 +62,8 @@ public class EventService {
 
     public Long modifyEvent(Long id, EventForm form){
         Optional<Event> eventOptional = eventRepository.findById(id);
-
         if (eventOptional.isPresent()) {
-            Event event = eventOptional.get();
-            return event.update(form);
+            return eventOptional.get().update(form);
         } else {
             throw new IllegalArgumentException("Event not found with id: " + id);
         }

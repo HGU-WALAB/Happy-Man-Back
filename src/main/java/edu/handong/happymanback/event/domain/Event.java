@@ -1,6 +1,7 @@
 package edu.handong.happymanback.event.domain;
 
 import edu.handong.happymanback.institution.domain.Institution;
+import edu.handong.happymanback.participant.domain.Participant;
 import edu.handong.happymanback.utils.BaseTime;
 import edu.handong.happymanback.utils.enums.Semester;
 import jakarta.persistence.*;
@@ -11,6 +12,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor
 @Entity
@@ -26,6 +29,9 @@ public class Event extends BaseTime{
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="institution_id")
     private Institution institution;
+
+    @OneToMany(mappedBy = "event")
+    private List<Participant> participantList= new ArrayList<>();
 
     @Column(nullable = false, length = 40)
     private String name;
