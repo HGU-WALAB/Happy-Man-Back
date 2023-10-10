@@ -1,6 +1,7 @@
 package edu.handong.happymanback.user.service;
 
 import edu.handong.happymanback.user.domain.User;
+import edu.handong.happymanback.user.dto.UserDto;
 import edu.handong.happymanback.user.dto.UserForm;
 import edu.handong.happymanback.user.exception.PersonalIdDuplicateException;
 import edu.handong.happymanback.user.repository.UserRepository;
@@ -10,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -47,14 +49,18 @@ public class UserService {
         return personalId;
     }
 
-    public List<User> userList(){
-        return userRepository.findAll();
+    public UserDto userList(){
+        List<UserDto.Info> users=userRepository.findAll()
+                .stream()
+                .map(UserDto.Info::new)
+                .collect(Collectors.toList());
+        return new UserDto(users);
     }
 
-    public User getUser(String personalId){
+    public UserDto.Info getUser(String personalId){
         Optional<User> userOptional = userRepository.findById(personalId);
         if (userOptional.isPresent()) {
-            return userOptional.get();
+            return new UserDto.Info(userOptional.get());
         } else {
             throw new IllegalArgumentException("User not found with id: " + personalId);
         }

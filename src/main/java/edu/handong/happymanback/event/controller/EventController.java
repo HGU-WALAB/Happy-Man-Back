@@ -1,6 +1,5 @@
 package edu.handong.happymanback.event.controller;
 
-import edu.handong.happymanback.event.domain.Event;
 import edu.handong.happymanback.event.dto.EventDto;
 import edu.handong.happymanback.event.dto.EventForm;
 import edu.handong.happymanback.event.service.EventService;
@@ -48,7 +47,7 @@ public class EventController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Event> getEvent(@PathVariable("id")Long id){
+    public ResponseEntity<EventDto.EventDetail> getEvent(@PathVariable("id")Long id){
         return ResponseEntity.ok().body(eventService.getEvent(id));
     }
 }
