@@ -22,7 +22,7 @@ public class UserDto {
         public Info(User user){
             this.personalId=user.getPersonalId();
             this.name=user.getName();
-            this.department=user.getName();
+            this.department=user.getDepartment();
         }
     }
 }
