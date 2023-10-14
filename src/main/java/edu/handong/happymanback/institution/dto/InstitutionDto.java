@@ -1,22 +1,25 @@
 package edu.handong.happymanback.institution.dto;
 
-import edu.handong.happymanback.institution.domain.Institution;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.*;
 
-@AllArgsConstructor
+import java.util.List;
+
 @Getter
-@NoArgsConstructor
+@AllArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@Setter
 public class InstitutionDto {
-    private Long id;
-    private String name;
-    private String description;
 
+    private List<Info> list;
+    private Info info;
 
-    public InstitutionDto(Institution institution) {
-        this.id=institution.getId();
-        this.name=institution.getName();
-        this.description=institution.getDescription();
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @Builder
+    @Getter
+    public static class Info{
+        private Long id;
+        private String name;
+        private String description;
     }
 }

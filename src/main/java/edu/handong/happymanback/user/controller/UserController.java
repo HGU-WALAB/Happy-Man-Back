@@ -38,7 +38,7 @@ public class UserController {
     }
 
     @GetMapping("{personalId}")
-    public ResponseEntity<UserDto.Info> user(@PathVariable("personalId")String personalId){
+    public ResponseEntity<UserDto> user(@PathVariable("personalId")String personalId){
         return ResponseEntity.ok().body(userService.getUser(personalId));
     }
 

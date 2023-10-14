@@ -1,28 +1,28 @@
 package edu.handong.happymanback.user.dto;
 
-import edu.handong.happymanback.user.domain.User;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import edu.handong.happymanback.utils.enums.Authority;
+import lombok.*;
 
 import java.util.List;
 
-@AllArgsConstructor
 @Getter
+@AllArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserDto {
 
-    private List<Info> infoList;
+    private List<Info> list;
+    private Info info;
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @Builder
     @Getter
-    @NoArgsConstructor
     public static class Info {
         private String personalId;
+        private String password;
         private String name;
+        private Authority authority;
         private String department;
-        public Info(User user){
-            this.personalId=user.getPersonalId();
-            this.name=user.getName();
-            this.department=user.getDepartment();
-        }
+        private String email;
     }
 }

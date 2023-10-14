@@ -9,9 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -50,17 +50,27 @@ public class UserService {
     }
 
     public UserDto userList(){
-        List<UserDto.Info> users=userRepository.findAll()
-                .stream()
-                .map(UserDto.Info::new)
-                .collect(Collectors.toList());
-        return new UserDto(users);
+        List<User> userList=userRepository.findAll();
+        List<UserDto.Info> list=new ArrayList<>();
+        for(User user:userList){
+            list.add(UserDto.Info.builder()
+                    .personalId(user.getPersonalId())
+                    .name(user.getName())
+                    .department(user.getDepartment())
+                    .build());
+        }
+        return new UserDto(list,null);
     }
 
-    public UserDto.Info getUser(String personalId){
+    public UserDto getUser(String personalId){
         Optional<User> userOptional = userRepository.findById(personalId);
         if (userOptional.isPresent()) {
-            return new UserDto.Info(userOptional.get());
+            User user=userOptional.get();
+            return new UserDto(null, UserDto.Info.builder()
+                    .personalId(user.getPersonalId())
+                    .name(user.getName())
+                    .department(user.getDepartment())
+                    .build());
         } else {
             throw new IllegalArgumentException("User not found with id: " + personalId);
         }

@@ -8,9 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -42,17 +42,28 @@ public class InstitutionService {
         return id;
     }
 
-    public List<InstitutionDto> institutionList(){
-        return institutionRepository.findAll()
-                .stream()
-                .map(InstitutionDto::new)
-                .collect(Collectors.toList());
+    public InstitutionDto institutionList(){
+        List<Institution> institutionList=institutionRepository.findAll();
+        List<InstitutionDto.Info> list = new ArrayList<>();
+        for(Institution institution:institutionList){
+            list.add(InstitutionDto.Info.builder()
+                    .id(institution.getId())
+                    .name(institution.getName())
+                    .description(institution.getDescription())
+                    .build());
+        }
+        return new InstitutionDto(list,null);
     }
 
     public InstitutionDto getInstitution(Long id){
         Optional<Institution> institutionOptional = institutionRepository.findById(id);
         if (institutionOptional.isPresent()) {
-            return new InstitutionDto(institutionOptional.get());
+            Institution institution = institutionOptional.get();
+            return new InstitutionDto(null,InstitutionDto.Info.builder()
+                    .id(institution.getId())
+                    .name(institution.getName())
+                    .description(institution.getDescription())
+                    .build());
         } else {
             throw new IllegalArgumentException("Institution not found with id: " + id);
         }
