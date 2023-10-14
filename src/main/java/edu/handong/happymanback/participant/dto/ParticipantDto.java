@@ -1,32 +1,26 @@
 package edu.handong.happymanback.participant.dto;
 
-import edu.handong.happymanback.participant.domain.Participant;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import edu.handong.happymanback.user.dto.UserDto;
 import edu.handong.happymanback.utils.enums.State;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
 @Getter
 @AllArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ParticipantDto {
 
-    private List<ParticipantDto.Info> infoList;
+    private List<ParticipantDto.Info> list;
+    private Info info;
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @Builder
     @Getter
-    @NoArgsConstructor
     public static class Info {
         private Long id;
         private State state;
-        private UserDto.Info student;
-        public Info(Participant participant){
-            this.id=participant.getId();
-            this.state=participant.getState();
-            this.student=new UserDto.Info(participant.getStudent());
-        }
+        private UserDto student;
     }
 }

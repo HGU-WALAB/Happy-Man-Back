@@ -3,7 +3,6 @@ package edu.handong.happymanback.participant.service;
 import edu.handong.happymanback.event.domain.Event;
 import edu.handong.happymanback.event.repository.EventRepository;
 import edu.handong.happymanback.participant.domain.Participant;
-import edu.handong.happymanback.participant.dto.ParticipantDto;
 import edu.handong.happymanback.participant.dto.ParticipantForm;
 import edu.handong.happymanback.participant.repository.ParticipantRepository;
 import edu.handong.happymanback.user.domain.User;
@@ -54,16 +53,6 @@ public class ParticipantService {
         Optional<Participant> participantOptional=participantRepository.findById(id);
         if(participantOptional.isPresent()){
             return participantOptional.get().update(form);
-        }
-        else{
-            throw new IllegalArgumentException("Participant not found with id: " + id);
-        }
-    }
-
-    public ParticipantDto.Info getParticipant(Long id){
-        Optional<Participant> participantOptional=participantRepository.findById(id);
-        if(participantOptional.isPresent()){
-            return new ParticipantDto.Info(participantOptional.get());
         }
         else{
             throw new IllegalArgumentException("Participant not found with id: " + id);

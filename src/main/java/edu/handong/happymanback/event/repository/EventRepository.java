@@ -11,5 +11,5 @@ import java.util.List;
 public interface EventRepository extends JpaRepository<Event,Long>{
 
     @Query("select e from Event e join fetch e.institution i")
-    List<Event> findSimpleList();
+    List<Event> findCardList();
 }
