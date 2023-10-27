@@ -34,19 +34,19 @@ public class UserService {
         return saved.getStudentId();
     }
 
-    public String modifyUser(String studentid, UserForm form) {
-        Optional<User> UserOptional = UserRepository.findById(studentid);
+    public String modifyUser(String studentId, UserForm form) {
+        Optional<User> UserOptional = UserRepository.findById(studentId);
         if (UserOptional.isPresent()) {
             User User = UserOptional.get();
             return User.update(form);
         } else {
-            throw new IllegalArgumentException("User not found with id: " + studentid);
+            throw new IllegalArgumentException("User not found with id: " + studentId);
         }
     }
 
-    public String deleteUser(String studentid) {
-        UserRepository.deleteById(studentid);
-        return studentid;
+    public String deleteUser(String studentId) {
+        UserRepository.deleteById(studentId);
+        return studentId;
     }
 
     public UserDto UserList(){
@@ -62,8 +62,8 @@ public class UserService {
         return new UserDto(list,null);
     }
 
-    public UserDto getUser(String studentid){
-        Optional<User> UserOptional = UserRepository.findById(studentid);
+    public UserDto getUser(String studentId){
+        Optional<User> UserOptional = UserRepository.findById(studentId);
         if (UserOptional.isPresent()) {
             User User=UserOptional.get();
             return new UserDto(null, UserDto.Info.builder()
@@ -72,7 +72,7 @@ public class UserService {
                     .department(User.getDepartment())
                     .build());
         } else {
-            throw new IllegalArgumentException("User not found with id: " + studentid);
+            throw new IllegalArgumentException("User not found with id: " + studentId);
         }
     }
 }
