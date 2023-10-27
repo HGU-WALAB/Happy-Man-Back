@@ -1,4 +1,4 @@
-package edu.handong.happymanback.student.dto;
+package edu.handong.happymanback.user.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -6,7 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class StudentForm {
+public class UserForm {
     private String name;
     private String studentId;
     private String password;

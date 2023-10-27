@@ -5,8 +5,8 @@ import edu.handong.happymanback.event.repository.EventRepository;
 import edu.handong.happymanback.participant.domain.Participant;
 import edu.handong.happymanback.participant.dto.ParticipantForm;
 import edu.handong.happymanback.participant.repository.ParticipantRepository;
-import edu.handong.happymanback.student.domain.Student;
-import edu.handong.happymanback.student.repository.StudentRepository;
+import edu.handong.happymanback.user.domain.User;
+import edu.handong.happymanback.user.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,25 +19,25 @@ public class ParticipantService {
     private final ParticipantRepository participantRepository;
     private final EventRepository eventRepository;
 
-    private final StudentRepository StudentRepository;
+    private final UserRepository UserRepository;
 
-    public ParticipantService(ParticipantRepository participantRepository,EventRepository eventRepository,StudentRepository StudentRepository){
+    public ParticipantService(ParticipantRepository participantRepository,EventRepository eventRepository,UserRepository UserRepository){
         this.participantRepository=participantRepository;
         this.eventRepository=eventRepository;
-        this.StudentRepository=StudentRepository;
+        this.UserRepository=UserRepository;
     }
 
     public Long createParticipant(ParticipantForm form){
         Optional<Event> eventOptional=eventRepository.findById(form.getEventId());
         if (eventOptional.isPresent()) {
-            Optional<Student> studentOptional=StudentRepository.findById(form.getStudentId());
-            if (studentOptional.isPresent()){
-                Participant participant=Participant.create(eventOptional.get(),studentOptional.get(),form);
+            Optional<User> userOptional=UserRepository.findById(form.getStudentid());
+            if (userOptional.isPresent()){
+                Participant participant=Participant.create(eventOptional.get(),userOptional.get(),form);
                 Participant saved=participantRepository.save(participant);
                 return saved.getId();
             }
             else{
-                throw new IllegalArgumentException("Student not found with id: " + form.getStudentId());
+                throw new IllegalArgumentException("User not found with id: " + form.getStudentid());
             }
         } else {
             throw new IllegalArgumentException("Event not found with id: " + form.getEventId());

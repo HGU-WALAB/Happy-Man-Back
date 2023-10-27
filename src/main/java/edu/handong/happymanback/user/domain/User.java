@@ -1,6 +1,6 @@
-package edu.handong.happymanback.student.domain;
+package edu.handong.happymanback.user.domain;
 
-import edu.handong.happymanback.student.dto.StudentForm;
+import edu.handong.happymanback.user.dto.UserForm;
 import edu.handong.happymanback.utils.BaseTime;
 import jakarta.persistence.*;
 import jakarta.persistence.Entity;
@@ -12,8 +12,8 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@Table(name="student")
-public class Student extends BaseTime {
+@Table(name="user")
+public class User extends BaseTime {
 
     @Id
     @Column(name="student_id",length = 30)
@@ -31,17 +31,17 @@ public class Student extends BaseTime {
     @Column(nullable = false, length = 30)
     private String email;
 
-    public static Student create(StudentForm form) {
-        Student Student = new Student();
-        Student.setName(form.getName());
-        Student.setStudentId(form.getStudentId());
-        Student.setDepartment(form.getDepartment());
-        Student.setPassword(form.getPassword());
-        Student.setEmail(form.getEmail());
-        return Student;
+    public static User create(UserForm form) {
+        User User = new User();
+        User.setName(form.getName());
+        User.setStudentId(form.getStudentId());
+        User.setDepartment(form.getDepartment());
+        User.setPassword(form.getPassword());
+        User.setEmail(form.getEmail());
+        return User;
     }
 
-    public String update(StudentForm form) {
+    public String update(UserForm form) {
         this.name = form.getName() != null ? form.getName() : name;
         this.department = form.getDepartment() != null ? form.getDepartment() : department;
         this.password = form.getPassword() != null ? form.getPassword() : password;

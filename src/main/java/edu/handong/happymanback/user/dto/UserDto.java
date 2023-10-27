@@ -1,4 +1,4 @@
-package edu.handong.happymanback.student.dto;
+package edu.handong.happymanback.user.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
@@ -8,7 +8,7 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class StudentDto {
+public class UserDto {
 
     private List<Info> list;
     private Info info;

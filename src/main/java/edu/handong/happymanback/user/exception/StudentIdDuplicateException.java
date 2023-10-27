@@ -1,4 +1,4 @@
-package edu.handong.happymanback.student.exception;
+package edu.handong.happymanback.user.exception;
 
 public class StudentIdDuplicateException extends IllegalStateException{
     public StudentIdDuplicateException() {

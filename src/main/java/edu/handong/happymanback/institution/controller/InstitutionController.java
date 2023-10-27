@@ -29,8 +29,8 @@ public class InstitutionController {
 
     @PatchMapping("{id}")
     public ResponseEntity<Map<String, Long>> modifyInstitution(@PathVariable("id")Long id,@RequestBody InstitutionForm form) {
-        Long modifystudentId = institutionService.modifyInstitution(id,form);
-        return ResponseEntity.ok().body(Map.of("institution id",modifystudentId));
+        Long modifyStudentId = institutionService.modifyInstitution(id,form);
+        return ResponseEntity.ok().body(Map.of("institution id",modifyStudentId));
     }
 
     @GetMapping

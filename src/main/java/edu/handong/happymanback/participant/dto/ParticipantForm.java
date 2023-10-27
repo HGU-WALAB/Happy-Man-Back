@@ -11,7 +11,7 @@ import lombok.Setter;
 public class ParticipantForm {
     private Long eventId;
 
-    private String studentId;
+    private String studentid;
 
     private State state;
 }
