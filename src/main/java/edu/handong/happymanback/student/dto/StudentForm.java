@@ -1,17 +1,15 @@
-package edu.handong.happymanback.user.dto;
+package edu.handong.happymanback.student.dto;
 
-import edu.handong.happymanback.utils.enums.Authority;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class UserForm {
+public class StudentForm {
     private String name;
-    private String personalId;
+    private String studentId;
     private String password;
     private String department;
-    private Authority authority;
     private String email;
 }

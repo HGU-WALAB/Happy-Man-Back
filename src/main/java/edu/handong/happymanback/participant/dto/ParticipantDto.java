@@ -1,7 +1,7 @@
 package edu.handong.happymanback.participant.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import edu.handong.happymanback.user.dto.UserDto;
+import edu.handong.happymanback.student.dto.StudentDto;
 import edu.handong.happymanback.utils.enums.State;
 import lombok.*;
 
@@ -21,6 +21,6 @@ public class ParticipantDto {
     public static class Info {
         private Long id;
         private State state;
-        private UserDto student;
+        private StudentDto student;
     }
 }

@@ -5,8 +5,8 @@ import edu.handong.happymanback.event.repository.EventRepository;
 import edu.handong.happymanback.participant.domain.Participant;
 import edu.handong.happymanback.participant.dto.ParticipantForm;
 import edu.handong.happymanback.participant.repository.ParticipantRepository;
-import edu.handong.happymanback.user.domain.User;
-import edu.handong.happymanback.user.repository.UserRepository;
+import edu.handong.happymanback.student.domain.Student;
+import edu.handong.happymanback.student.repository.StudentRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,18 +19,18 @@ public class ParticipantService {
     private final ParticipantRepository participantRepository;
     private final EventRepository eventRepository;
 
-    private final UserRepository userRepository;
+    private final StudentRepository StudentRepository;
 
-    public ParticipantService(ParticipantRepository participantRepository,EventRepository eventRepository,UserRepository userRepository){
+    public ParticipantService(ParticipantRepository participantRepository,EventRepository eventRepository,StudentRepository StudentRepository){
         this.participantRepository=participantRepository;
         this.eventRepository=eventRepository;
-        this.userRepository=userRepository;
+        this.StudentRepository=StudentRepository;
     }
 
     public Long createParticipant(ParticipantForm form){
         Optional<Event> eventOptional=eventRepository.findById(form.getEventId());
         if (eventOptional.isPresent()) {
-            Optional<User> studentOptional=userRepository.findById(form.getStudentId());
+            Optional<Student> studentOptional=StudentRepository.findById(form.getStudentId());
             if (studentOptional.isPresent()){
                 Participant participant=Participant.create(eventOptional.get(),studentOptional.get(),form);
                 Participant saved=participantRepository.save(participant);

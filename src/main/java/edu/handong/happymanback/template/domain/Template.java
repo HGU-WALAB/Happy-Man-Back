@@ -47,7 +47,7 @@ public class Template extends BaseTime {
     private String eventNameLocation;
 
     @Column(length = 80)
-    private String personalIdLocation;
+    private String studentIdLocation;
 
     @Column(length = 80)
     private String departmentLocation;

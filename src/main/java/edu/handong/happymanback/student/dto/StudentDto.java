@@ -1,7 +1,6 @@
-package edu.handong.happymanback.user.dto;
+package edu.handong.happymanback.student.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import edu.handong.happymanback.utils.enums.Authority;
 import lombok.*;
 
 import java.util.List;
@@ -9,7 +8,7 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class UserDto {
+public class StudentDto {
 
     private List<Info> list;
     private Info info;
@@ -18,10 +17,9 @@ public class UserDto {
     @Builder
     @Getter
     public static class Info {
-        private String personalId;
+        private String studentId;
         private String password;
         private String name;
-        private Authority authority;
         private String department;
         private String email;
     }
