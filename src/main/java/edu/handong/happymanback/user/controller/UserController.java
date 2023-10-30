@@ -13,38 +13,38 @@ import java.util.Map;
 @CrossOrigin("http://localhost:8080")
 @RequestMapping("/api/happyman/user")
 public class UserController {
-    private final UserService UserService;
+    private final UserService userService;
 
-    public UserController(UserService UserService){
-        this.UserService=UserService;
+    public UserController(UserService userService){
+        this.userService = userService;
     }
+
     @PostMapping
     public ResponseEntity<Map<String, String>> joinUser(@RequestBody UserForm form) {
-        String joinId = UserService.join(form);
+        String joinId = userService.join(form);
         return ResponseEntity.created(
-                URI.create("/api/happyman/User/" + joinId)
+                URI.create("/api/happyman/user/" + joinId)
         ).body(Map.of("id", joinId));
     }
 
     @PatchMapping("{studentId}")
-    public ResponseEntity<Map<String, String>> modifyUser(@PathVariable("studentId")String studentId,@RequestBody UserForm form) {
-        String modifyUserId = UserService.modifyUser(studentId,form);
-        return ResponseEntity.ok().body(Map.of("student id",modifyUserId));
+    public ResponseEntity<Map<String, String>> modifyUser(@PathVariable("studentId") String studentId, @RequestBody UserForm form) {
+        String modifyUserId = userService.modifyUser(studentId, form);
+        return ResponseEntity.ok().body(Map.of("student id", modifyUserId));
     }
 
     @GetMapping
-    public ResponseEntity<UserDto> UserList(){
-        return ResponseEntity.ok().body(UserService.UserList());
+    public ResponseEntity<UserDto> userList(){
+        return ResponseEntity.ok().body(userService.userList());
     }
 
     @GetMapping("{studentId}")
-    public ResponseEntity<UserDto> User(@PathVariable("studentId")String studentId){
-        return ResponseEntity.ok().body(UserService.getUser(studentId));
+    public ResponseEntity<UserDto> user(@PathVariable("studentId") String studentId){
+        return ResponseEntity.ok().body(userService.getUser(studentId));
     }
 
     @DeleteMapping("{studentId}")
-    public ResponseEntity<Map<String, String>> deleteUser(@PathVariable("studentId")String studentId){
-        return ResponseEntity.ok().body(Map.of("id",UserService.deleteUser(studentId)));
+    public ResponseEntity<Map<String, String>> deleteUser(@PathVariable("studentId") String studentId){
+        return ResponseEntity.ok().body(Map.of("id", userService.deleteUser(studentId)));
     }
-
 }

@@ -17,59 +17,59 @@ import java.util.Optional;
 @Transactional
 public class UserService {
 
-    private final UserRepository UserRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    public UserService(UserRepository UserRepository) {
-        this.UserRepository = UserRepository;
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     public String join(UserForm form) {
-        UserRepository.findById(form.getStudentId())
-                .ifPresent(m->{
+        userRepository.findById(form.getStudentId())
+                .ifPresent(user->{
                     throw new StudentIdDuplicateException();
                 });
         User user = User.create(form);
-        User saved = UserRepository.save(user);
+        User saved = userRepository.save(user);
         return saved.getStudentId();
     }
 
     public String modifyUser(String studentId, UserForm form) {
-        Optional<User> UserOptional = UserRepository.findById(studentId);
-        if (UserOptional.isPresent()) {
-            User User = UserOptional.get();
-            return User.update(form);
+        Optional<User> userOptional = userRepository.findById(studentId);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            return user.update(form);
         } else {
             throw new IllegalArgumentException("User not found with id: " + studentId);
         }
     }
 
     public String deleteUser(String studentId) {
-        UserRepository.deleteById(studentId);
+        userRepository.deleteById(studentId);
         return studentId;
     }
 
-    public UserDto UserList(){
-        List<User> UserList=UserRepository.findAll();
+    public UserDto userList(){
+        List<User> userList=userRepository.findAll();
         List<UserDto.Info> list=new ArrayList<>();
-        for(User User:UserList){
+        for(User user:userList){
             list.add(UserDto.Info.builder()
-                    .studentId(User.getStudentId())
-                    .name(User.getName())
-                    .department(User.getDepartment())
+                    .studentId(user.getStudentId())
+                    .name(user.getName())
+                    .department(user.getDepartment())
                     .build());
         }
         return new UserDto(list,null);
     }
 
     public UserDto getUser(String studentId){
-        Optional<User> UserOptional = UserRepository.findById(studentId);
-        if (UserOptional.isPresent()) {
-            User User=UserOptional.get();
+        Optional<User> userOptional = userRepository.findById(studentId);
+        if (userOptional.isPresent()) {
+            User user=userOptional.get();
             return new UserDto(null, UserDto.Info.builder()
-                    .studentId(User.getStudentId())
-                    .name(User.getName())
-                    .department(User.getDepartment())
+                    .studentId(user.getStudentId())
+                    .name(user.getName())
+                    .department(user.getDepartment())
                     .build());
         } else {
             throw new IllegalArgumentException("User not found with id: " + studentId);
