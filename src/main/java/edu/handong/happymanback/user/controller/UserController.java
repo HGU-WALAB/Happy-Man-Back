@@ -10,7 +10,7 @@ import java.net.URI;
 import java.util.Map;
 
 @RestController
-@CrossOrigin("http://localhost:8080")
+@CrossOrigin("http://localhost:3000")
 @RequestMapping("/api/happyman/user")
 public class UserController {
     private final UserService userService;
