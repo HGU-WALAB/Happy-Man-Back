@@ -16,8 +16,9 @@ public class UserController {
     private final UserService userService;
 
     public UserController(UserService userService){
-        this.userService=userService;
+        this.userService = userService;
     }
+
     @PostMapping
     public ResponseEntity<Map<String, String>> joinUser(@RequestBody UserForm form) {
         String joinId = userService.join(form);
@@ -26,10 +27,10 @@ public class UserController {
         ).body(Map.of("id", joinId));
     }
 
-    @PatchMapping("{personalId}")
-    public ResponseEntity<Map<String, String>> modifyUser(@PathVariable("personalId")String personalId,@RequestBody UserForm form) {
-        String modifyPersonalId = userService.modifyUser(personalId,form);
-        return ResponseEntity.ok().body(Map.of("personal id",modifyPersonalId));
+    @PatchMapping("{studentId}")
+    public ResponseEntity<Map<String, String>> modifyUser(@PathVariable("studentId") String studentId, @RequestBody UserForm form) {
+        String modifyUserId = userService.modifyUser(studentId, form);
+        return ResponseEntity.ok().body(Map.of("student id", modifyUserId));
     }
 
     @GetMapping
@@ -37,14 +38,13 @@ public class UserController {
         return ResponseEntity.ok().body(userService.userList());
     }
 
-    @GetMapping("{personalId}")
-    public ResponseEntity<UserDto> user(@PathVariable("personalId")String personalId){
-        return ResponseEntity.ok().body(userService.getUser(personalId));
+    @GetMapping("{studentId}")
+    public ResponseEntity<UserDto> user(@PathVariable("studentId") String studentId){
+        return ResponseEntity.ok().body(userService.getUser(studentId));
     }
 
-    @DeleteMapping("{personalId}")
-    public ResponseEntity<Map<String, String>> deleteUser(@PathVariable("personalId")String personalId){
-        return ResponseEntity.ok().body(Map.of("id",userService.deleteUser(personalId)));
+    @DeleteMapping("{studentId}")
+    public ResponseEntity<Map<String, String>> deleteUser(@PathVariable("studentId") String studentId){
+        return ResponseEntity.ok().body(Map.of("id", userService.deleteUser(studentId)));
     }
-
 }

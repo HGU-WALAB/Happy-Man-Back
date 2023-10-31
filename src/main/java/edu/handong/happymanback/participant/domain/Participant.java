@@ -27,17 +27,17 @@ public class Participant extends BaseTime{
     private Event event;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="student_id")
-    private User student;
+    @JoinColumn(name="user_id")
+    private User user;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private State state=State.WAITING;
 
-    public static Participant create(Event event, User student,ParticipantForm form){
+    public static Participant create(Event event, User user,ParticipantForm form){
         Participant participant=new Participant();
         participant.setEvent(event);
-        participant.setStudent(student);
+        participant.setUser(user);
         if(form.getState()!=null) {
             participant.setState(form.getState());
         }

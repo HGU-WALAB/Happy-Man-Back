@@ -3,7 +3,7 @@ package edu.handong.happymanback.user.service;
 import edu.handong.happymanback.user.domain.User;
 import edu.handong.happymanback.user.dto.UserDto;
 import edu.handong.happymanback.user.dto.UserForm;
-import edu.handong.happymanback.user.exception.PersonalIdDuplicateException;
+import edu.handong.happymanback.user.exception.StudentIdDuplicateException;
 import edu.handong.happymanback.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,28 +25,28 @@ public class UserService {
     }
 
     public String join(UserForm form) {
-        userRepository.findById(form.getPersonalId())
-                .ifPresent(m->{
-                    throw new PersonalIdDuplicateException();
+        userRepository.findById(form.getStudentId())
+                .ifPresent(user->{
+                    throw new StudentIdDuplicateException();
                 });
         User user = User.create(form);
         User saved = userRepository.save(user);
-        return saved.getPersonalId();
+        return saved.getStudentId();
     }
 
-    public String modifyUser(String personalId, UserForm form) {
-        Optional<User> userOptional = userRepository.findById(personalId);
+    public String modifyUser(String studentId, UserForm form) {
+        Optional<User> userOptional = userRepository.findById(studentId);
         if (userOptional.isPresent()) {
             User user = userOptional.get();
             return user.update(form);
         } else {
-            throw new IllegalArgumentException("User not found with id: " + personalId);
+            throw new IllegalArgumentException("User not found with id: " + studentId);
         }
     }
 
-    public String deleteUser(String personalId) {
-        userRepository.deleteById(personalId);
-        return personalId;
+    public String deleteUser(String studentId) {
+        userRepository.deleteById(studentId);
+        return studentId;
     }
 
     public UserDto userList(){
@@ -54,7 +54,7 @@ public class UserService {
         List<UserDto.Info> list=new ArrayList<>();
         for(User user:userList){
             list.add(UserDto.Info.builder()
-                    .personalId(user.getPersonalId())
+                    .studentId(user.getStudentId())
                     .name(user.getName())
                     .department(user.getDepartment())
                     .build());
@@ -62,17 +62,17 @@ public class UserService {
         return new UserDto(list,null);
     }
 
-    public UserDto getUser(String personalId){
-        Optional<User> userOptional = userRepository.findById(personalId);
+    public UserDto getUser(String studentId){
+        Optional<User> userOptional = userRepository.findById(studentId);
         if (userOptional.isPresent()) {
             User user=userOptional.get();
             return new UserDto(null, UserDto.Info.builder()
-                    .personalId(user.getPersonalId())
+                    .studentId(user.getStudentId())
                     .name(user.getName())
                     .department(user.getDepartment())
                     .build());
         } else {
-            throw new IllegalArgumentException("User not found with id: " + personalId);
+            throw new IllegalArgumentException("User not found with id: " + studentId);
         }
     }
 }

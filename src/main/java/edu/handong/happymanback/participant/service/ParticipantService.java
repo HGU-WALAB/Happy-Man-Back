@@ -19,25 +19,25 @@ public class ParticipantService {
     private final ParticipantRepository participantRepository;
     private final EventRepository eventRepository;
 
-    private final UserRepository userRepository;
+    private final UserRepository UserRepository;
 
-    public ParticipantService(ParticipantRepository participantRepository,EventRepository eventRepository,UserRepository userRepository){
+    public ParticipantService(ParticipantRepository participantRepository,EventRepository eventRepository,UserRepository UserRepository){
         this.participantRepository=participantRepository;
         this.eventRepository=eventRepository;
-        this.userRepository=userRepository;
+        this.UserRepository=UserRepository;
     }
 
     public Long createParticipant(ParticipantForm form){
         Optional<Event> eventOptional=eventRepository.findById(form.getEventId());
         if (eventOptional.isPresent()) {
-            Optional<User> studentOptional=userRepository.findById(form.getStudentId());
-            if (studentOptional.isPresent()){
-                Participant participant=Participant.create(eventOptional.get(),studentOptional.get(),form);
+            Optional<User> userOptional=UserRepository.findById(form.getStudentId());
+            if (userOptional.isPresent()){
+                Participant participant=Participant.create(eventOptional.get(),userOptional.get(),form);
                 Participant saved=participantRepository.save(participant);
                 return saved.getId();
             }
             else{
-                throw new IllegalArgumentException("Student not found with id: " + form.getStudentId());
+                throw new IllegalArgumentException("User not found with id: " + form.getStudentId());
             }
         } else {
             throw new IllegalArgumentException("Event not found with id: " + form.getEventId());

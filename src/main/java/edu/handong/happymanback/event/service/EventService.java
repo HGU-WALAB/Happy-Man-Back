@@ -64,10 +64,10 @@ public class EventService {
                 participantList.add(ParticipantDto.Info.builder()
                         .id(participant.getId())
                         .state(participant.getState())
-                        .student(new UserDto(null,UserDto.Info.builder()
-                                .personalId(participant.getStudent().getPersonalId())
-                                .name(participant.getStudent().getName())
-                                .department(participant.getStudent().getDepartment())
+                        .user(new UserDto(null,UserDto.Info.builder()
+                                .studentId(participant.getUser().getStudentId())
+                                .name(participant.getUser().getName())
+                                .department(participant.getUser().getDepartment())
                                 .build()))
                         .build());
             }

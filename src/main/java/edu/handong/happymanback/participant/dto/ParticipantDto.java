@@ -21,6 +21,6 @@ public class ParticipantDto {
     public static class Info {
         private Long id;
         private State state;
-        private UserDto student;
+        private UserDto user;
     }
 }
