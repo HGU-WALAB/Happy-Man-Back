@@ -30,14 +30,14 @@ public class ParticipantService {
     public Long createParticipant(ParticipantForm form){
         Optional<Event> eventOptional=eventRepository.findById(form.getEventId());
         if (eventOptional.isPresent()) {
-            Optional<User> userOptional=UserRepository.findById(form.getStudentid());
+            Optional<User> userOptional=UserRepository.findById(form.getStudentId());
             if (userOptional.isPresent()){
                 Participant participant=Participant.create(eventOptional.get(),userOptional.get(),form);
                 Participant saved=participantRepository.save(participant);
                 return saved.getId();
             }
             else{
-                throw new IllegalArgumentException("User not found with id: " + form.getStudentid());
+                throw new IllegalArgumentException("User not found with id: " + form.getStudentId());
             }
         } else {
             throw new IllegalArgumentException("Event not found with id: " + form.getEventId());
