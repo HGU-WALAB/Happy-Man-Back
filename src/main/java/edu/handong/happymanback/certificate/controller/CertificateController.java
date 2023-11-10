@@ -37,8 +37,10 @@ public class CertificateController {
                     .endDate(participant.getEvent().getEndDate())
                     .certificateIssueDate(participant.getEvent().getCertificateIssueDate())
                     .institution(participant.getEvent().getInstitution().getName())
-                    .certificateNum("제2023-418호")
-                    .responsiblePerson("한동대학교 전산전자공학부 황성수")
+                    .serialNumber(participant.getSerialNumber())
+                    .issuingName(participant.getEvent().getIssuingName())
+                    .serialNumber(participant.getSerialNumber())
+                    .stamp(participant.getEvent().getStamp())
                     .build());
         }
 

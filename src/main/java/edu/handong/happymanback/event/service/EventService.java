@@ -41,7 +41,7 @@ public class EventService {
                             .name(event.getInstitution().getName())
                             .build()))
                     .name(event.getName())
-                    .manager(event.getManager())
+                    .professor(event.getProfessor())
                     .year(event.getYear())
                     .semester(event.getSemester())
                     .image(event.getImage())
@@ -50,6 +50,7 @@ public class EventService {
                     .endDate(event.getEndDate())
                     .content(event.getContent())
                     .certificateIssueDate(event.getCertificateIssueDate())
+                    .isOpen(event.getIsOpen())
                     .build());
         }
         return new EventDto(list,null);
@@ -63,7 +64,7 @@ public class EventService {
             for (Participant participant: event.getParticipantList()){
                 participantList.add(ParticipantDto.Info.builder()
                         .id(participant.getId())
-                        .state(participant.getState())
+                        .serialNumber(participant.getSerialNumber())
                         .user(new UserDto(null,UserDto.Info.builder()
                                 .studentId(participant.getUser().getStudentId())
                                 .name(participant.getUser().getName())
@@ -79,7 +80,7 @@ public class EventService {
                             .build()))
                     .participantList(new ParticipantDto(participantList,null))
                     .name(event.getName())
-                    .manager(event.getManager())
+                    .professor(event.getProfessor())
                     .year(event.getYear())
                     .semester(event.getSemester())
                     .image(event.getImage())
@@ -88,6 +89,8 @@ public class EventService {
                     .endDate(event.getEndDate())
                     .content(event.getContent())
                     .certificateIssueDate(event.getCertificateIssueDate())
+                    .isOpen(event.getIsOpen())
+                    .issuingName(event.getIssuingName())
                     .build());
         }else{
             throw new IllegalArgumentException("Event not found with id: " + id);
@@ -115,6 +118,15 @@ public class EventService {
         Optional<Event> eventOptional = eventRepository.findById(id);
         if (eventOptional.isPresent()) {
             return eventOptional.get().update(form);
+        } else {
+            throw new IllegalArgumentException("Event not found with id: " + id);
+        }
+    }
+
+    public Long updateIsOpen(Long id, EventForm form){
+        Optional<Event> eventOptional = eventRepository.findById(id);
+        if (eventOptional.isPresent()) {
+            return eventOptional.get().updateIsOpen(form);
         } else {
             throw new IllegalArgumentException("Event not found with id: " + id);
         }

@@ -34,6 +34,9 @@ public class Participant extends BaseTime{
     @Enumerated(EnumType.STRING)
     private State state=State.WAITING;
 
+    @Column(length = 30)
+    private String serialNumber;
+
     public static Participant create(Event event, User user,ParticipantForm form){
         Participant participant=new Participant();
         participant.setEvent(event);
@@ -41,11 +44,13 @@ public class Participant extends BaseTime{
         if(form.getState()!=null) {
             participant.setState(form.getState());
         }
+        participant.setSerialNumber(form.getSerialNumber());
         return participant;
     }
 
     public Long update(ParticipantForm form){
         this.state = form.getState() != null ? form.getState() : this.state;
+        this.serialNumber = form.getSerialNumber() != null ? form.getSerialNumber() : this.serialNumber;
         return id;
     }
 }

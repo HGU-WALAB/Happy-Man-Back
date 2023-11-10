@@ -50,4 +50,10 @@ public class EventController {
     public ResponseEntity<EventDto> getEvent(@PathVariable("id")Long id){
         return ResponseEntity.ok().body(eventService.getEvent(id));
     }
+
+    @PatchMapping("updateIsOpen/{id}")
+    public ResponseEntity<Map<String,Long>> updateIsOpen(@PathVariable("id")Long id,@RequestBody EventForm form){
+        Long modifyId= eventService.updateIsOpen(id, form);
+        return ResponseEntity.ok().body(Map.of("id",modifyId));
+    }
 }

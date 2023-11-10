@@ -13,7 +13,7 @@ import java.time.LocalDate;
 public class EventForm {
     private Long institutionId;
     private String name;
-    private String manager;
+    private String professor;
     private String year;
     private Semester semester;
     private String image;
@@ -22,4 +22,7 @@ public class EventForm {
     private LocalDate endDate;
     private String content;
     private LocalDate certificateIssueDate;
+    private String stamp;
+    private String issuingName;
+    private Boolean isOpen;
 }
