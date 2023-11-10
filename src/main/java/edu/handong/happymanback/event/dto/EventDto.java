@@ -29,7 +29,7 @@ public class EventDto {
         private InstitutionDto institution;
         private ParticipantDto participantList;
         private String name;
-        private String manager;
+        private String professor;
         private String year;
         private Semester semester;
         private String image;
@@ -38,5 +38,8 @@ public class EventDto {
         private LocalDate endDate;
         private String content;
         private LocalDate certificateIssueDate;
+        private Boolean isOpen;
+        private String stamp;
+        private String issuingName;
     }
 }

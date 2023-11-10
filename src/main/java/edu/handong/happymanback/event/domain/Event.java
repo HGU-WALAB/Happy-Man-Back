@@ -37,7 +37,7 @@ public class Event extends BaseTime{
     private String name;
 
     @Column(length = 20)
-    private String manager;
+    private String professor;
 
     @Column(nullable = false,length = 10)
     private String year;
@@ -46,6 +46,7 @@ public class Event extends BaseTime{
     @Enumerated(EnumType.STRING)
     private Semester semester;
 
+    @Column(length = 1000)
     private String image;
 
     private LocalDate applicationDate;
@@ -61,11 +62,20 @@ public class Event extends BaseTime{
 
     private LocalDate certificateIssueDate;
 
+    private Boolean isOpen=false;
+
+    @Column(length = 1000, nullable = false)
+    private String stamp;
+
+    @Column(length = 50, nullable = false)
+    private String issuingName;
+
+
     public static Event create(Institution institution, EventForm form){
         Event event = new Event();
         event.setInstitution(institution);
         event.setName(form.getName());
-        event.setManager(form.getManager());
+        event.setProfessor(form.getProfessor());
         event.setYear(form.getYear());
         event.setSemester(form.getSemester());
         event.setImage(form.getImage());
@@ -74,12 +84,14 @@ public class Event extends BaseTime{
         event.setEndDate(form.getEndDate());
         event.setContent(form.getContent());
         event.setCertificateIssueDate(form.getCertificateIssueDate());
+        event.setStamp(form.getStamp());
+        event.setIssuingName(form.getIssuingName());
         return event;
     }
 
     public Long update(EventForm form) {
         this.name = form.getName() != null ? form.getName() : this.name;
-        this.manager = form.getManager() != null ? form.getManager() : this.manager;
+        this.professor = form.getProfessor() != null ? form.getProfessor() : this.professor;
         this.year = form.getYear() != null ? form.getYear() : this.year;
         this.semester = form.getSemester() != null ? form.getSemester() : this.semester;
         this.image = form.getImage() != null ? form.getImage() : this.image;
@@ -88,6 +100,13 @@ public class Event extends BaseTime{
         this.endDate = form.getEndDate() != null ? form.getEndDate() : this.endDate;
         this.content = form.getContent() != null ? form.getContent() : this.content;
         this.certificateIssueDate = form.getCertificateIssueDate() != null ? form.getCertificateIssueDate() : this.certificateIssueDate;
+        this.stamp = form.getStamp() != null ? form.getStamp() : this.stamp;
+        this.issuingName = form.getIssuingName() != null ? form.getIssuingName() : this.issuingName;
+        return id;
+    }
+
+    public Long updateIsOpen(EventForm form){
+        this.isOpen=form.getIsOpen();
         return id;
     }
 }

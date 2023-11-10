@@ -22,5 +22,6 @@ public class ParticipantDto {
         private Long id;
         private State state;
         private UserDto user;
+        private String serialNumber;
     }
 }

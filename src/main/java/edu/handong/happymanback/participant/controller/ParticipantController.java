@@ -1,5 +1,6 @@
 package edu.handong.happymanback.participant.controller;
 
+import edu.handong.happymanback.participant.dto.ParticipantDto;
 import edu.handong.happymanback.participant.dto.ParticipantForm;
 import edu.handong.happymanback.participant.service.ParticipantService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,5 +40,10 @@ public class ParticipantController {
     public ResponseEntity<Map<String,Long>> deleteParticipant(@PathVariable("id") Long id){
         Long deleteId=participantService.deleteParticipant(id);
         return ResponseEntity.ok().body(Map.of("id",deleteId));
+    }
+
+    @GetMapping("{id}")
+    public ResponseEntity<ParticipantDto> getParticipant(@PathVariable("id") Long id){
+        return ResponseEntity.ok(participantService.getParticipant(id));
     }
 }

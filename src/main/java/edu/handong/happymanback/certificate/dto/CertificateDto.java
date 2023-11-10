@@ -16,6 +16,7 @@ public class CertificateDto {
     private LocalDate endDate;
     private LocalDate certificateIssueDate;
     private String institution;
-    private String certificateNum;
-    private String responsiblePerson;
+    private String serialNumber;
+    private String issuingName;
+    private String stamp;
 }

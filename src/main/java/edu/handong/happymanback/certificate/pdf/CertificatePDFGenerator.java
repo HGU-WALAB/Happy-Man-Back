@@ -25,11 +25,6 @@ public class CertificatePDFGenerator {
             backgroundImage.scaleToFit(document.getPageSize().getWidth(), document.getPageSize().getHeight());
             PdfContentByte under = writer.getDirectContentUnder();
 
-            //직인 이미지 설정
-            Image stampImage = Image.getInstance("src/main/resources/static/img/stamp.png");
-            stampImage.setAbsolutePosition(document.getPageSize().getWidth() - 160, 80);
-            stampImage.scaleToFit(100,100);
-
             //날짜 형식
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일");
 
@@ -41,12 +36,16 @@ public class CertificatePDFGenerator {
             Font midFont = new Font(bfKorea, 25);
             for (CertificateDto certificateDto:certificateDtoList
             ) {
+                //직인 이미지 설정
+                Image stampImage = Image.getInstance(certificateDto.getStamp());
+                stampImage.setAbsolutePosition(document.getPageSize().getWidth() - 140, 120);
+                stampImage.scaleToFit(70,70);
                 under.addImage(stampImage);
                 under.addImage(backgroundImage);
 
                 document.add(new Paragraph("\n\n"));
                 //호수
-                Paragraph certificateNum = new Paragraph(certificateDto.getCertificateNum(), smallFont);
+                Paragraph certificateNum = new Paragraph(certificateDto.getSerialNumber(), smallFont);
                 certificateNum.setIndentationLeft(20);
                 document.add(certificateNum);
 
@@ -103,9 +102,9 @@ public class CertificatePDFGenerator {
                 document.add(new Paragraph("\n\n"));
 
                 //책임자 추가
-                Paragraph responsiblePerson = new Paragraph(certificateDto.getResponsiblePerson(),midFont);
-                responsiblePerson.setAlignment(Paragraph.ALIGN_CENTER);
-                document.add(responsiblePerson);
+                Paragraph issuingName = new Paragraph(certificateDto.getIssuingName(),midFont);
+                issuingName.setAlignment(Paragraph.ALIGN_CENTER);
+                document.add(issuingName);
 
                 //새 페이지 추가
                 document.newPage();

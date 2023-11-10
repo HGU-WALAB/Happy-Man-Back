@@ -14,4 +14,6 @@ public class ParticipantForm {
     private String studentId;
 
     private State state;
+
+    private String serialNumber;
 }
