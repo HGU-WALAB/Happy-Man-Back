@@ -71,7 +71,8 @@ public class EventController {
 
     @GetMapping("/excel/download/{id}")
     public ResponseEntity<Resource> downloadExcel(@PathVariable("id") Long id){
-        String filename = "tutorials.xlsx";
+        EventDto eventDto=eventService.getEvent(id);
+        String filename =eventDto.getInfo().getYear()+eventDto.getInfo().getSemester()+".xlsx";
         InputStreamResource file = new InputStreamResource(excelService.excelDownload(id));
 
         return ResponseEntity.ok()

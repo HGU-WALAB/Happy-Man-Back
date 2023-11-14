@@ -2,10 +2,7 @@ package edu.handong.happymanback.excel.util;
 import edu.handong.happymanback.participant.domain.Participant;
 import edu.handong.happymanback.participant.dto.ParticipantForm;
 import edu.handong.happymanback.participant.service.ParticipantService;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,7 +19,7 @@ import java.util.List;
 public class ExcelUtil {
     public static String TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
     static String[] HEADERS = { "학번", "학부", "이름", "상장 호수" };
-    static String SHEET = "Tutorials";
+    static String SHEET = "참가자 명단";
 
     private final ParticipantService participantService;
 
@@ -89,7 +86,11 @@ public class ExcelUtil {
                     Cell currentCell = cellsInRow.next();
                     if (currentCell != null) {
                         switch (cellIdx) {
-                            case 0 -> form.setStudentId(currentCell.getStringCellValue());
+                            case 0->{
+                                DataFormatter dataFormatter = new DataFormatter();
+                                String value = dataFormatter.formatCellValue(currentCell);
+                                form.setStudentId(value);
+                            }
                             case 3 -> form.setSerialNumber(currentCell.getStringCellValue());
                             default -> {
                             }
