@@ -19,7 +19,6 @@ public class ParticipantService {
 
     private final ParticipantRepository participantRepository;
     private final EventRepository eventRepository;
-
     private final UserRepository UserRepository;
 
     public ParticipantService(ParticipantRepository participantRepository,EventRepository eventRepository,UserRepository UserRepository){

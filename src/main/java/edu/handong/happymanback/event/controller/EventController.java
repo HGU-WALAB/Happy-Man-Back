@@ -3,7 +3,10 @@ package edu.handong.happymanback.event.controller;
 import edu.handong.happymanback.event.dto.EventDto;
 import edu.handong.happymanback.event.dto.EventForm;
 import edu.handong.happymanback.event.service.EventService;
+import edu.handong.happymanback.excel.exception.FileUploadException;
+import edu.handong.happymanback.excel.exception.InvalidFileFormatException;
 import edu.handong.happymanback.excel.service.ExcelService;
+import edu.handong.happymanback.excel.util.ExcelUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
@@ -11,8 +14,10 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.core.io.Resource;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.net.URI;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -73,5 +78,18 @@ public class EventController {
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + filename)
                 .contentType(MediaType.parseMediaType("application/vnd.ms-excel"))
                 .body(file);
+    }
+
+    @PostMapping("/excel/upload/{id}")
+    public ResponseEntity<Map<String, List<Long>>> uploadFile(@PathVariable("id") Long id, @RequestParam("file") MultipartFile file) throws FileUploadException {
+        if (ExcelUtil.hasExcelFormat(file)) {
+            try {
+                String message = "Uploaded the file successfully: " + file.getOriginalFilename();
+                return ResponseEntity.ok().body(Map.of(message,excelService.excelUpload(id,file)));
+            } catch (Exception e) {
+                throw new FileUploadException("Could not upload the file: " + file.getOriginalFilename() + "!", e);
+            }
+        }
+        throw new InvalidFileFormatException("excel");
     }
 }
