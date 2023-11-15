@@ -91,6 +91,7 @@ public class EventService {
                     .certificateIssueDate(event.getCertificateIssueDate())
                     .isOpen(event.getIsOpen())
                     .issuingName(event.getIssuingName())
+                    .stamp(event.getStamp())
                     .build());
         }else{
             throw new IllegalArgumentException("Event not found with id: " + id);
