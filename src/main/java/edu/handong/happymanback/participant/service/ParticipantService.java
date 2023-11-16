@@ -11,6 +11,7 @@ import edu.handong.happymanback.user.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -44,9 +45,9 @@ public class ParticipantService {
         }
     }
 
-    public Long deleteParticipant(Long id){
-        participantRepository.deleteById(id);
-        return id;
+    public List<Long> deleteParticipant(List<Long> ids){
+        participantRepository.deleteByIds(ids);
+        return ids;
     }
 
     public Long modifyParticipant(Long id, ParticipantForm form){
