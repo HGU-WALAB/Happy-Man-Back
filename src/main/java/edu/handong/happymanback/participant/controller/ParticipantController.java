@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -36,10 +37,10 @@ public class ParticipantController {
         return ResponseEntity.ok().body(Map.of("id",modifyId));
     }
 
-    @DeleteMapping("{id}")
-    public ResponseEntity<Map<String,Long>> deleteParticipant(@PathVariable("id") Long id){
-        Long deleteId=participantService.deleteParticipant(id);
-        return ResponseEntity.ok().body(Map.of("id",deleteId));
+    @DeleteMapping
+    public ResponseEntity<Map<String,List<Long>>> deleteParticipant(@RequestParam("ids") List<Long> ids){
+        List<Long> deleteIds=participantService.deleteParticipant(ids);
+        return ResponseEntity.ok().body(Map.of("ids",deleteIds));
     }
 
     @GetMapping("{id}")
