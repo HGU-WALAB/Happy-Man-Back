@@ -3,7 +3,6 @@ package edu.handong.happymanback.user.service;
 import edu.handong.happymanback.user.domain.User;
 import edu.handong.happymanback.user.dto.UserDto;
 import edu.handong.happymanback.user.dto.UserForm;
-import edu.handong.happymanback.user.exception.StudentIdDuplicateException;
 import edu.handong.happymanback.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,16 +21,6 @@ public class UserService {
     @Autowired
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
-    }
-
-    public String join(UserForm form) {
-        userRepository.findById(form.getStudentId())
-                .ifPresent(user->{
-                    throw new StudentIdDuplicateException();
-                });
-        User user = User.create(form);
-        User saved = userRepository.save(user);
-        return saved.getStudentId();
     }
 
     public String modifyUser(String studentId, UserForm form) {
@@ -54,7 +43,7 @@ public class UserService {
         List<UserDto.Info> list=new ArrayList<>();
         for(User user:userList){
             list.add(UserDto.Info.builder()
-                    .studentId(user.getStudentId())
+                    .uniqueId(user.getUniqueId())
                     .name(user.getName())
                     .department(user.getDepartment())
                     .build());
@@ -67,7 +56,7 @@ public class UserService {
         if (userOptional.isPresent()) {
             User user=userOptional.get();
             return new UserDto(null, UserDto.Info.builder()
-                    .studentId(user.getStudentId())
+                    .uniqueId(user.getUniqueId())
                     .name(user.getName())
                     .department(user.getDepartment())
                     .build());

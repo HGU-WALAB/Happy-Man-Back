@@ -2,6 +2,7 @@ package edu.handong.happymanback.user.domain;
 
 import edu.handong.happymanback.user.dto.UserForm;
 import edu.handong.happymanback.utils.BaseTime;
+import edu.handong.happymanback.utils.enums.Role;
 import jakarta.persistence.*;
 import jakarta.persistence.Entity;
 import lombok.Getter;
@@ -16,8 +17,8 @@ import lombok.Setter;
 public class User extends BaseTime {
 
     @Id
-    @Column(name="student_id",length = 30)
-    private String studentId;
+    @Column(name="unique_id",length = 30)
+    private String uniqueId;
 
     @Column(nullable = false, length = 30)
     private String password;
@@ -31,14 +32,18 @@ public class User extends BaseTime {
     @Column(nullable = false, length = 30)
     private String email;
 
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
     public static User create(UserForm form) {
-        User User = new User();
-        User.setName(form.getName());
-        User.setStudentId(form.getStudentId());
-        User.setDepartment(form.getDepartment());
-        User.setPassword(form.getPassword());
-        User.setEmail(form.getEmail());
-        return User;
+        User user = new User();
+        user.setName(form.getName());
+        user.setUniqueId(form.getUniqueId());
+        user.setDepartment(form.getDepartment());
+        user.setPassword(form.getPassword());
+        user.setEmail(form.getEmail());
+        user.setRole(Role.USER);
+        return user;
     }
 
     public String update(UserForm form) {
@@ -46,7 +51,7 @@ public class User extends BaseTime {
         this.department = form.getDepartment() != null ? form.getDepartment() : department;
         this.password = form.getPassword() != null ? form.getPassword() : password;
         this.email = form.getEmail() != null ? form.getEmail() : email;
-        return this.studentId;
+        return this.uniqueId;
     }
 
 }

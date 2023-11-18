@@ -6,7 +6,6 @@ import edu.handong.happymanback.user.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URI;
 import java.util.Map;
 
 @RestController
@@ -19,13 +18,6 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping
-    public ResponseEntity<Map<String, String>> joinUser(@RequestBody UserForm form) {
-        String joinId = userService.join(form);
-        return ResponseEntity.created(
-                URI.create("/api/happyman/user/" + joinId)
-        ).body(Map.of("id", joinId));
-    }
 
     @PatchMapping("{studentId}")
     public ResponseEntity<Map<String, String>> modifyUser(@PathVariable("studentId") String studentId, @RequestBody UserForm form) {

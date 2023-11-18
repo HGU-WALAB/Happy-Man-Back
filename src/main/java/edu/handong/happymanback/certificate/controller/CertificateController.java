@@ -24,13 +24,13 @@ public class CertificateController {
     ParticipantRepository participantRepository;
 
     @GetMapping(produces = MediaType.APPLICATION_PDF_VALUE)
-    public ResponseEntity<InputStreamResource> customerReport(@RequestParam("participantIds") List<Long> participantIds){
+    public ResponseEntity<InputStreamResource> certificationPDF(@RequestParam("participantIds") List<Long> participantIds){
         List<CertificateDto> certificateDtoList = new ArrayList<>();
         List<Participant> participantList = participantRepository.findCertificateList(participantIds);
         for (Participant participant : participantList) {
             certificateDtoList.add(CertificateDto.builder()
                     .department(participant.getUser().getDepartment())
-                    .studentId(participant.getUser().getStudentId())
+                    .studentId(participant.getUser().getUniqueId())
                     .name(participant.getUser().getName())
                     .event(participant.getEvent().getName())
                     .startDate(participant.getEvent().getStartDate())

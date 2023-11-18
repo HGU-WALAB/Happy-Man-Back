@@ -66,7 +66,7 @@ public class EventService {
                         .id(participant.getId())
                         .serialNumber(participant.getSerialNumber())
                         .user(new UserDto(null,UserDto.Info.builder()
-                                .studentId(participant.getUser().getStudentId())
+                                .uniqueId(participant.getUser().getUniqueId())
                                 .name(participant.getUser().getName())
                                 .department(participant.getUser().getDepartment())
                                 .build()))
