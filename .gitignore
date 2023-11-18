@@ -33,4 +33,4 @@ build/
 .vscode/
 
 ### CUSTOM ###
-application-dev.properties
+src/main/resources/application-dev.yml

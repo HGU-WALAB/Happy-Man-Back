@@ -1,5 +1,4 @@
-package edu.handong.happymanback.admin.dto;
-
+package edu.handong.happymanback.auth.dto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -7,10 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class AdminForm {
-    private String id;
-
-    private String name;
-
+public class AuthForm {
+    private String uniqueId;
     private String password;
 }

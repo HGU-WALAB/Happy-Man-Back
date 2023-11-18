@@ -48,7 +48,7 @@ public class ExcelUtil {
             for (Participant participant : participantList) {
                 Row row = sheet.createRow(rowIdx++);
 
-                row.createCell(0).setCellValue(participant.getUser().getStudentId());
+                row.createCell(0).setCellValue(participant.getUser().getUniqueId());
                 row.createCell(1).setCellValue(participant.getUser().getDepartment());
                 row.createCell(2).setCellValue(participant.getUser().getName());
                 row.createCell(3).setCellValue(participant.getSerialNumber());
