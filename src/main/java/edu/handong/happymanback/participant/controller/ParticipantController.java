@@ -13,7 +13,7 @@ import java.util.Map;
 
 @RestController
 @CrossOrigin("http://localhost:3000")
-@RequestMapping("/api/happyman/participant")
+@RequestMapping("/api/happyman")
 public class ParticipantController {
 
     private final ParticipantService participantService;
@@ -23,7 +23,7 @@ public class ParticipantController {
         this.participantService=participantService;
     }
 
-    @PostMapping
+    @PostMapping("admin/participant")
     public ResponseEntity<Map<String,Long>> createParticipant(@RequestBody ParticipantForm form){
         Long createdId= participantService.createParticipant(form);
         return ResponseEntity.created(
@@ -31,19 +31,19 @@ public class ParticipantController {
         ).body(Map.of("id", createdId));
     }
 
-    @PatchMapping("{id}")
+    @PatchMapping("admin/participant/{id}")
     public ResponseEntity<Map<String,Long>> modifyParticipant(@PathVariable("id") Long id,@RequestBody ParticipantForm form){
         Long modifyId= participantService.modifyParticipant(id, form);
         return ResponseEntity.ok().body(Map.of("id",modifyId));
     }
 
-    @DeleteMapping
+    @DeleteMapping("admin/participant")
     public ResponseEntity<Map<String,List<Long>>> deleteParticipant(@RequestParam("ids") List<Long> ids){
         List<Long> deleteIds=participantService.deleteParticipant(ids);
         return ResponseEntity.ok().body(Map.of("ids",deleteIds));
     }
 
-    @GetMapping("{id}")
+    @GetMapping("admin/participant/{id}")
     public ResponseEntity<ParticipantDto> getParticipant(@PathVariable("id") Long id){
         return ResponseEntity.ok(participantService.getParticipant(id));
     }

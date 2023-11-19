@@ -34,7 +34,7 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests(request -> request
                         .requestMatchers(
-                                "/api/happyman/auth/**"
+                                "/api/happyman/auth/**","/error"
                         )
                         .permitAll()
                 )
