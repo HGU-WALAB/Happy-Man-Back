@@ -10,7 +10,7 @@ import java.util.Map;
 
 @RestController
 @CrossOrigin("http://localhost:3000")
-@RequestMapping("/api/happyman/user")
+@RequestMapping("/api/happyman")
 public class UserController {
     private final UserService userService;
 
@@ -19,24 +19,24 @@ public class UserController {
     }
 
 
-    @PatchMapping("{studentId}")
-    public ResponseEntity<Map<String, String>> modifyUser(@PathVariable("studentId") String studentId, @RequestBody UserForm form) {
-        String modifyUserId = userService.modifyUser(studentId, form);
-        return ResponseEntity.ok().body(Map.of("student id", modifyUserId));
+    @PatchMapping("admin/user/{uniqueId}")
+    public ResponseEntity<Map<String, String>> modifyUser(@PathVariable("uniqueId") String uniqueId, @RequestBody UserForm form) {
+        String modifyUserId = userService.modifyUser(uniqueId, form);
+        return ResponseEntity.ok().body(Map.of("unique id", modifyUserId));
     }
 
-    @GetMapping
+    @GetMapping("admin/user")
     public ResponseEntity<UserDto> userList(){
         return ResponseEntity.ok().body(userService.userList());
     }
 
-    @GetMapping("{studentId}")
-    public ResponseEntity<UserDto> user(@PathVariable("studentId") String studentId){
-        return ResponseEntity.ok().body(userService.getUser(studentId));
+    @GetMapping("admin/user/{unique}")
+    public ResponseEntity<UserDto> user(@PathVariable("unique") String unique){
+        return ResponseEntity.ok().body(userService.getUser(unique));
     }
 
-    @DeleteMapping("{studentId}")
-    public ResponseEntity<Map<String, String>> deleteUser(@PathVariable("studentId") String studentId){
-        return ResponseEntity.ok().body(Map.of("id", userService.deleteUser(studentId)));
+    @DeleteMapping("admin/user/{unique}")
+    public ResponseEntity<Map<String, String>> deleteUser(@PathVariable("unique") String uniqueId){
+        return ResponseEntity.ok().body(Map.of("uniqueId", userService.deleteUser(uniqueId)));
     }
 }

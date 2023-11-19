@@ -22,7 +22,7 @@ import java.util.Map;
 
 @RestController
 @CrossOrigin("http://localhost:3000")
-@RequestMapping("/api/happyman/event")
+@RequestMapping("/api/happyman")
 public class EventController {
 
     private final EventService eventService;
@@ -33,7 +33,7 @@ public class EventController {
         this.excelService = excelService;
     }
 
-    @PostMapping
+    @PostMapping("admin/event")
     public ResponseEntity<Map<String,Long>> createEvent(@RequestBody EventForm form){
         Long createdId= eventService.createEvent(form);
         return ResponseEntity.created(
@@ -41,37 +41,37 @@ public class EventController {
         ).body(Map.of("id", createdId));
     }
 
-    @PatchMapping("{id}")
+    @PatchMapping("admin/event/{id}")
     public ResponseEntity<Map<String,Long>> modifyEvent(@PathVariable("id")Long id,@RequestBody EventForm form){
         Long modifyId= eventService.modifyEvent(id, form);
         return ResponseEntity.ok().body(Map.of("id",modifyId));
     }
 
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("admin/event/{id}")
     public ResponseEntity<Map<String, Long>> deleteEvent(@PathVariable("id")Long id){
         return ResponseEntity.ok().body(Map.of("id", eventService.deleteEvent(id)));
     }
 
-    @GetMapping
-    public ResponseEntity<EventDto> searchEvent(){
-        return ResponseEntity.ok(eventService.eventList());
+    @GetMapping("admin/event")
+    public ResponseEntity<EventDto> adminEventList(){
+        return ResponseEntity.ok(eventService.adminEventList());
     }
 
-    @GetMapping("{id}")
-    public ResponseEntity<EventDto> getEvent(@PathVariable("id")Long id){
-        return ResponseEntity.ok().body(eventService.getEvent(id));
+    @GetMapping("admin/event/{id}")
+    public ResponseEntity<EventDto> adminGetEvent(@PathVariable("id")Long id){
+        return ResponseEntity.ok().body(eventService.adminGetEvent(id));
     }
 
-    @PatchMapping("updateIsOpen/{id}")
+    @PatchMapping("admin/updateIsOpen/{id}")
     public ResponseEntity<Map<String,Long>> updateIsOpen(@PathVariable("id")Long id,@RequestBody EventForm form){
         Long modifyId= eventService.updateIsOpen(id, form);
         return ResponseEntity.ok().body(Map.of("id",modifyId));
     }
 
-    @GetMapping("/excel/download/{id}")
+    @GetMapping("admin/event/excel/download/{id}")
     public ResponseEntity<Resource> downloadExcel(@PathVariable("id") Long id){
-        EventDto eventDto=eventService.getEvent(id);
+        EventDto eventDto=eventService.adminGetEvent(id);
         String filename =eventDto.getInfo().getYear()+eventDto.getInfo().getSemester()+".xlsx";
         InputStreamResource file = new InputStreamResource(excelService.excelDownload(id));
 
@@ -81,7 +81,7 @@ public class EventController {
                 .body(file);
     }
 
-    @PostMapping("/excel/upload/{id}")
+    @PostMapping("admin/event/excel/upload/{id}")
     public ResponseEntity<Map<String, List<Long>>> uploadFile(@PathVariable("id") Long id, @RequestParam("file") MultipartFile file) throws FileUploadException {
         if (ExcelUtil.hasExcelFormat(file)) {
             try {

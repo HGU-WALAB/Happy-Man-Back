@@ -17,7 +17,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin("http://localhost:3000")
-@RequestMapping("/api/happyman/certificate")
+@RequestMapping("/api/happyman/admin/certificate")
 public class CertificateController {
 
     @Autowired

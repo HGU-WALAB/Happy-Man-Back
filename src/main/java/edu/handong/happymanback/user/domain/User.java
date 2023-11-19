@@ -51,6 +51,7 @@ public class User extends BaseTime {
         this.department = form.getDepartment() != null ? form.getDepartment() : department;
         this.password = form.getPassword() != null ? form.getPassword() : password;
         this.email = form.getEmail() != null ? form.getEmail() : email;
+        this.role = form.getRole() !=null ? form.getRole() : role;
         return this.uniqueId;
     }
 

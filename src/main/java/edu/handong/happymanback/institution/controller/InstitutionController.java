@@ -12,14 +12,14 @@ import java.util.Map;
 
 @RestController
 @CrossOrigin("http://localhost:3000")
-@RequestMapping("/api/happyman/institution")
+@RequestMapping("/api/happyman")
 public class InstitutionController {
 
     private final InstitutionService institutionService;
     @Autowired
     public InstitutionController(InstitutionService institutionService){this.institutionService=institutionService;}
 
-    @PostMapping
+    @PostMapping("admin/institution")
     public ResponseEntity<Map<String, Long>> createInstitution(@RequestBody InstitutionForm form) {
         Long createId = institutionService.join(form);
         return ResponseEntity.created(
@@ -27,23 +27,23 @@ public class InstitutionController {
         ).body(Map.of("id", createId));
     }
 
-    @PatchMapping("{id}")
+    @PatchMapping("admin/institution/{id}")
     public ResponseEntity<Map<String, Long>> modifyInstitution(@PathVariable("id")Long id,@RequestBody InstitutionForm form) {
         Long modifyStudentId = institutionService.modifyInstitution(id,form);
         return ResponseEntity.ok().body(Map.of("institution id",modifyStudentId));
     }
 
-    @GetMapping
+    @GetMapping("institution")
     public ResponseEntity<InstitutionDto> institutionList(){
         return ResponseEntity.ok().body(institutionService.institutionList());
     }
 
-    @GetMapping("{id}")
+    @GetMapping("institution/{id}")
     public ResponseEntity<InstitutionDto> institution(@PathVariable("id")Long id){
         return ResponseEntity.ok().body(institutionService.getInstitution(id));
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("admin/institution/{id}")
     public ResponseEntity<Map<String, Long>> deleteInstitution(@PathVariable("id")Long id){
         return ResponseEntity.ok().body(Map.of("institution id",institutionService.deleteInstitution(id)));
     }

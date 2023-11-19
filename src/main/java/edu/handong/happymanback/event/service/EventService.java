@@ -30,7 +30,7 @@ public class EventService {
         this.institutionRepository=institutionRepository;
     }
 
-    public EventDto eventList(){
+    public EventDto adminEventList(){
         List<Event> eventList=eventRepository.findCardList();
         List<EventDto.Info> list=new ArrayList<>();
         for(Event event:eventList){
@@ -56,7 +56,7 @@ public class EventService {
         return new EventDto(list,null);
     }
 
-    public EventDto getEvent(Long id){
+    public EventDto adminGetEvent(Long id){
         Optional<Event> eventOptional= eventRepository.findById(id);
         if(eventOptional.isPresent()){
             Event event=eventOptional.get();
