@@ -30,13 +30,13 @@ public class UserController {
         return ResponseEntity.ok().body(userService.userList());
     }
 
-    @GetMapping("admin/user/{unique}")
-    public ResponseEntity<UserDto> user(@PathVariable("unique") String unique){
-        return ResponseEntity.ok().body(userService.getUser(unique));
+    @GetMapping("admin/user/{uniqueId}")
+    public ResponseEntity<UserDto> user(@PathVariable("uniqueId") String uniqueId){
+        return ResponseEntity.ok().body(userService.getUser(uniqueId));
     }
 
-    @DeleteMapping("admin/user/{unique}")
-    public ResponseEntity<Map<String, String>> deleteUser(@PathVariable("unique") String uniqueId){
+    @DeleteMapping("admin/user/{uniqueId}")
+    public ResponseEntity<Map<String, String>> deleteUser(@PathVariable("uniqueId") String uniqueId){
         return ResponseEntity.ok().body(Map.of("uniqueId", userService.deleteUser(uniqueId)));
     }
 }

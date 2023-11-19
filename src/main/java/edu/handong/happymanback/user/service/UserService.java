@@ -51,8 +51,8 @@ public class UserService {
         return new UserDto(list,null);
     }
 
-    public UserDto getUser(String unique){
-        Optional<User> userOptional = userRepository.findById(unique);
+    public UserDto getUser(String uniqueId){
+        Optional<User> userOptional = userRepository.findById(uniqueId);
         if (userOptional.isPresent()) {
             User user=userOptional.get();
             return new UserDto(null, UserDto.Info.builder()
@@ -63,7 +63,7 @@ public class UserService {
                     .email(user.getEmail())
                     .build());
         } else {
-            throw new IllegalArgumentException("User not found with id: " + unique);
+            throw new IllegalArgumentException("User not found with id: " + uniqueId);
         }
     }
 }
