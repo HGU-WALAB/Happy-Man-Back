@@ -39,13 +39,13 @@ public class SecurityConfig {
                         .permitAll()
                 )
                 .authorizeHttpRequests(request -> request
+                        .requestMatchers("/api/happyman/admin/**")
+                        .hasAuthority(Role.ADMIN.name())
+                )
+                .authorizeHttpRequests(request -> request
                         .requestMatchers(
                                 "/api/happyman/**"
                         ).authenticated()
-                )
-                .authorizeHttpRequests(request -> request
-                        .requestMatchers("/api/happyman/admin/**")
-                        .hasAuthority(Role.ADMIN.name())
                 );
         return http.build();
     }
