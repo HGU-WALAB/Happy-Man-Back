@@ -48,9 +48,9 @@ public class ExcelUtil {
             for (Participant participant : participantList) {
                 Row row = sheet.createRow(rowIdx++);
 
-                row.createCell(0).setCellValue(participant.getUser().getUniqueId());
-                row.createCell(1).setCellValue(participant.getUser().getDepartment());
-                row.createCell(2).setCellValue(participant.getUser().getName());
+                row.createCell(0).setCellValue(participant.getStudentId());
+                row.createCell(1).setCellValue(participant.getDepartment());
+                row.createCell(2).setCellValue(participant.getName());
                 row.createCell(3).setCellValue(participant.getSerialNumber());
             }
 
@@ -91,6 +91,8 @@ public class ExcelUtil {
                                 String value = dataFormatter.formatCellValue(currentCell);
                                 form.setStudentId(value);
                             }
+                            case 1 -> form.setDepartment(currentCell.getStringCellValue());
+                            case 2 -> form.setName(currentCell.getStringCellValue());
                             case 3 -> form.setSerialNumber(currentCell.getStringCellValue());
                             default -> {
                             }

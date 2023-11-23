@@ -2,7 +2,6 @@ package edu.handong.happymanback.participant.domain;
 
 import edu.handong.happymanback.event.domain.Event;
 import edu.handong.happymanback.participant.dto.ParticipantForm;
-import edu.handong.happymanback.user.domain.User;
 import edu.handong.happymanback.utils.BaseTime;
 import edu.handong.happymanback.utils.enums.State;
 import jakarta.persistence.*;
@@ -26,9 +25,14 @@ public class Participant extends BaseTime{
     @JoinColumn(name="event_id")
     private Event event;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="user_id")
-    private User user;
+    @Column(nullable = false, length = 30)
+    private String studentId;
+
+    @Column(nullable = false, length = 20)
+    private String name;
+
+    @Column(nullable = false, length = 40)
+    private String department;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
@@ -37,10 +41,12 @@ public class Participant extends BaseTime{
     @Column(length = 30)
     private String serialNumber;
 
-    public static Participant create(Event event, User user,ParticipantForm form){
+    public static Participant create(Event event,ParticipantForm form){
         Participant participant=new Participant();
         participant.setEvent(event);
-        participant.setUser(user);
+        participant.setStudentId(form.getStudentId());
+        participant.setDepartment(form.getDepartment());
+        participant.setName(form.getName());
         if(form.getState()!=null) {
             participant.setState(form.getState());
         }
@@ -51,6 +57,9 @@ public class Participant extends BaseTime{
     public Long update(ParticipantForm form){
         this.state = form.getState() != null ? form.getState() : this.state;
         this.serialNumber = form.getSerialNumber() != null ? form.getSerialNumber() : this.serialNumber;
+        this.department = form.getDepartment() !=null ? form.getDepartment() : this.department;
+        this.name = form.getName() !=null ? form.getName() : this.name;
+        this.studentId = form.getStudentId() !=null ? form.getStudentId() : this.studentId;
         return id;
     }
 }
