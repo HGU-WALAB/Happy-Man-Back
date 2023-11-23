@@ -29,9 +29,9 @@ public class CertificateController {
         List<Participant> participantList = participantRepository.findCertificateList(participantIds);
         for (Participant participant : participantList) {
             certificateDtoList.add(CertificateDto.builder()
-                    .department(participant.getUser().getDepartment())
-                    .studentId(participant.getUser().getUniqueId())
-                    .name(participant.getUser().getName())
+                    .department(participant.getDepartment())
+                    .studentId(participant.getStudentId())
+                    .name(participant.getName())
                     .event(participant.getEvent().getName())
                     .startDate(participant.getEvent().getStartDate())
                     .endDate(participant.getEvent().getEndDate())

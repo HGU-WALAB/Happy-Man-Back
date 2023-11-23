@@ -9,7 +9,6 @@ import edu.handong.happymanback.institution.dto.InstitutionDto;
 import edu.handong.happymanback.institution.repository.InstitutionRepository;
 import edu.handong.happymanback.participant.domain.Participant;
 import edu.handong.happymanback.participant.dto.ParticipantDto;
-import edu.handong.happymanback.user.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -65,11 +64,9 @@ public class EventService {
                 participantList.add(ParticipantDto.Info.builder()
                         .id(participant.getId())
                         .serialNumber(participant.getSerialNumber())
-                        .user(new UserDto(null,UserDto.Info.builder()
-                                .uniqueId(participant.getUser().getUniqueId())
-                                .name(participant.getUser().getName())
-                                .department(participant.getUser().getDepartment())
-                                .build()))
+                        .name(participant.getName())
+                                .studentId(participant.getStudentId())
+                                .department(participant.getDepartment())
                         .build());
             }
             return new EventDto(null,EventDto.Info.builder()

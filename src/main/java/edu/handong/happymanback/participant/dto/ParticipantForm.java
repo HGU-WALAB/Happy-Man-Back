@@ -18,4 +18,8 @@ public class ParticipantForm {
     private State state;
 
     private String serialNumber;
+
+    private String department;
+
+    private String name;
 }
