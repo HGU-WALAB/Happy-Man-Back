@@ -1,5 +1,6 @@
 package edu.handong.happymanback.event.service;
 
+import edu.handong.happymanback.aws.s3.service.S3Service;
 import edu.handong.happymanback.event.domain.Event;
 import edu.handong.happymanback.event.dto.EventDto;
 import edu.handong.happymanback.event.dto.EventForm;
@@ -12,7 +13,9 @@ import edu.handong.happymanback.participant.dto.ParticipantDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -23,10 +26,13 @@ public class EventService {
     private final EventRepository eventRepository;
     private final InstitutionRepository institutionRepository;
 
+    private final S3Service s3Service;
+
     @Autowired
-    public EventService(EventRepository eventRepository,InstitutionRepository institutionRepository) {
+    public EventService(EventRepository eventRepository, InstitutionRepository institutionRepository, S3Service s3Service) {
         this.eventRepository = eventRepository;
         this.institutionRepository=institutionRepository;
+        this.s3Service = s3Service;
     }
 
     public EventDto adminEventList(){
@@ -43,7 +49,7 @@ public class EventService {
                     .professor(event.getProfessor())
                     .year(event.getYear())
                     .semester(event.getSemester())
-                    .image(event.getImage())
+                    .image(s3Service.getEventUrl(event.getImage()))
                     .applicationDate(event.getApplicationDate())
                     .startDate(event.getStartDate())
                     .endDate(event.getEndDate())
@@ -80,7 +86,7 @@ public class EventService {
                     .professor(event.getProfessor())
                     .year(event.getYear())
                     .semester(event.getSemester())
-                    .image(event.getImage())
+                    .image(s3Service.getEventUrl(event.getImage()))
                     .applicationDate(event.getApplicationDate())
                     .startDate(event.getStartDate())
                     .endDate(event.getEndDate())
@@ -88,18 +94,24 @@ public class EventService {
                     .certificateIssueDate(event.getCertificateIssueDate())
                     .isOpen(event.getIsOpen())
                     .issuingName(event.getIssuingName())
-                    .stamp(event.getStamp())
+                    .stamp(s3Service.getImageUrl(event.getStamp()))
                     .build());
         }else{
             throw new IllegalArgumentException("Event not found with id: " + id);
         }
     }
 
-    public Long createEvent(EventForm form){
+    public Long createEvent(EventForm form, MultipartFile image, MultipartFile stamp) throws IOException {
+        String imageName=null;
+        String stampName=null;
+        if(image!=null)
+            imageName= s3Service.upload(image,"event");
+        if(stamp!=null)
+            stampName= s3Service.upload(stamp,"stamp");
         Optional<Institution> institutionOptional=institutionRepository.findById(form.getInstitutionId());
         if (institutionOptional.isPresent()) {
             Institution institution = institutionOptional.get();
-            Event event = Event.create(institution,form);
+            Event event = Event.create(institution,form,imageName,stampName);
             Event saved= eventRepository.save(event);
             return saved.getId();
         } else {
@@ -108,14 +120,38 @@ public class EventService {
     }
 
     public Long deleteEvent(Long id){
+        Optional<Event> eventOptional = eventRepository.findById(id);
+        if (eventOptional.isPresent()) {
+            Event event=eventOptional.get();
+            if(event.getImage()!=null){
+                s3Service.delete(event.getImage());
+            }
+            if(event.getStamp()!=null){
+                s3Service.delete(event.getStamp());
+            }
+        } else {
+            throw new IllegalArgumentException("Event not found with id: " + id);
+        }
         eventRepository.deleteById(id);
         return id;
     }
 
-    public Long modifyEvent(Long id, EventForm form){
+    public Long modifyEvent(Long id, EventForm form, MultipartFile image, MultipartFile stamp) throws IOException {
+        String imageName=null;
+        String stampName=null;
+        if(image!=null)
+            imageName= s3Service.upload(image,"event");
+        if(stamp!=null)
+            stampName= s3Service.upload(stamp,"stamp");
         Optional<Event> eventOptional = eventRepository.findById(id);
         if (eventOptional.isPresent()) {
-            return eventOptional.get().update(form);
+            if(eventOptional.get().getImage()!=null&&imageName!=null){
+                s3Service.delete(eventOptional.get().getImage());
+            }
+            if(eventOptional.get().getStamp()!=null&&stampName!=null){
+                s3Service.delete(eventOptional.get().getStamp());
+            }
+            return eventOptional.get().update(form,imageName,stampName);
         } else {
             throw new IllegalArgumentException("Event not found with id: " + id);
         }
