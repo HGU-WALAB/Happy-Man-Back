@@ -16,13 +16,11 @@ public class EventForm {
     private String professor;
     private String year;
     private Semester semester;
-    private String image;
     private LocalDate applicationDate;
     private LocalDate startDate;
     private LocalDate endDate;
     private String content;
     private LocalDate certificateIssueDate;
-    private String stamp;
     private String issuingName;
     private Boolean isOpen;
 }

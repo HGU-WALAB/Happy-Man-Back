@@ -71,36 +71,36 @@ public class Event extends BaseTime{
     private String issuingName;
 
 
-    public static Event create(Institution institution, EventForm form){
+    public static Event create(Institution institution, EventForm form, String image, String stamp){
         Event event = new Event();
         event.setInstitution(institution);
         event.setName(form.getName());
         event.setProfessor(form.getProfessor());
         event.setYear(form.getYear());
         event.setSemester(form.getSemester());
-        event.setImage(form.getImage());
+        event.setImage(image);
         event.setApplicationDate((form.getApplicationDate()));
         event.setStartDate(form.getStartDate());
         event.setEndDate(form.getEndDate());
         event.setContent(form.getContent());
         event.setCertificateIssueDate(form.getCertificateIssueDate());
-        event.setStamp(form.getStamp());
+        event.setStamp(stamp);
         event.setIssuingName(form.getIssuingName());
         return event;
     }
 
-    public Long update(EventForm form) {
+    public Long update(EventForm form, String image, String stamp) {
         this.name = form.getName() != null ? form.getName() : this.name;
         this.professor = form.getProfessor() != null ? form.getProfessor() : this.professor;
         this.year = form.getYear() != null ? form.getYear() : this.year;
         this.semester = form.getSemester() != null ? form.getSemester() : this.semester;
-        this.image = form.getImage() != null ? form.getImage() : this.image;
+        this.image = image != null ? image : this.image;
         this.applicationDate = form.getApplicationDate() != null ? form.getApplicationDate() : this.applicationDate;
         this.startDate = form.getStartDate() != null ? form.getStartDate() : this.startDate;
         this.endDate = form.getEndDate() != null ? form.getEndDate() : this.endDate;
         this.content = form.getContent() != null ? form.getContent() : this.content;
         this.certificateIssueDate = form.getCertificateIssueDate() != null ? form.getCertificateIssueDate() : this.certificateIssueDate;
-        this.stamp = form.getStamp() != null ? form.getStamp() : this.stamp;
+        this.stamp = stamp != null ? stamp : this.stamp;
         this.issuingName = form.getIssuingName() != null ? form.getIssuingName() : this.issuingName;
         return id;
     }

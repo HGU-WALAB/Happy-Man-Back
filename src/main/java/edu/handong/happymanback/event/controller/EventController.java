@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.net.URI;
 import java.util.List;
 import java.util.Map;
@@ -34,16 +35,16 @@ public class EventController {
     }
 
     @PostMapping("admin/event")
-    public ResponseEntity<Map<String,Long>> createEvent(@RequestBody EventForm form){
-        Long createdId= eventService.createEvent(form);
+    public ResponseEntity<Map<String,Long>> createEvent(@RequestPart(value="form") EventForm form, @RequestPart(value="image",required = false) MultipartFile image, @RequestPart(value="stamp",required = false) MultipartFile stamp) throws IOException {
+        Long createdId= eventService.createEvent(form,image,stamp);
         return ResponseEntity.created(
                 URI.create("/api/happyman/event/" + createdId)
         ).body(Map.of("id", createdId));
     }
 
     @PatchMapping("admin/event/{id}")
-    public ResponseEntity<Map<String,Long>> modifyEvent(@PathVariable("id")Long id,@RequestBody EventForm form){
-        Long modifyId= eventService.modifyEvent(id, form);
+    public ResponseEntity<Map<String,Long>> modifyEvent(@PathVariable("id")Long id,@RequestPart(value="form") EventForm form, @RequestPart(value="image",required = false) MultipartFile image, @RequestPart(value="stamp",required = false) MultipartFile stamp) throws IOException {
+        Long modifyId= eventService.modifyEvent(id, form,image,stamp);
         return ResponseEntity.ok().body(Map.of("id",modifyId));
     }
 

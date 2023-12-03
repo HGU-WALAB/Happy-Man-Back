@@ -50,4 +50,12 @@ public class AuthController {
 
         return ResponseEntity.ok().body(new AuthDto(jwtToken,null));
     }
+
+    @GetMapping("/me")
+    public ResponseEntity<User> getMe(@RequestHeader("Authorization") String bearerToken) {
+        String jwtToken = bearerToken.split(" ")[1];
+        String uniqueId = JwtTokenUtil.getUniqueId(jwtToken, secretKey);
+        User user = authService.getLoginUserByUniqueId(uniqueId);
+        return ResponseEntity.ok(user);
+    }
 }

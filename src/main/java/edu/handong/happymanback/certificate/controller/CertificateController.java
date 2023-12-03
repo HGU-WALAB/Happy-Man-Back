@@ -1,5 +1,6 @@
 package edu.handong.happymanback.certificate.controller;
 
+import edu.handong.happymanback.aws.s3.service.S3Service;
 import edu.handong.happymanback.certificate.dto.CertificateDto;
 import edu.handong.happymanback.certificate.pdf.CertificatePDFGenerator;
 import edu.handong.happymanback.participant.domain.Participant;
@@ -23,6 +24,9 @@ public class CertificateController {
     @Autowired
     ParticipantRepository participantRepository;
 
+    @Autowired
+    S3Service s3Service;
+
     @GetMapping(produces = MediaType.APPLICATION_PDF_VALUE)
     public ResponseEntity<InputStreamResource> certificationPDF(@RequestParam("participantIds") List<Long> participantIds){
         List<CertificateDto> certificateDtoList = new ArrayList<>();
@@ -40,7 +44,7 @@ public class CertificateController {
                     .serialNumber(participant.getSerialNumber())
                     .issuingName(participant.getEvent().getIssuingName())
                     .serialNumber(participant.getSerialNumber())
-                    .stamp(participant.getEvent().getStamp())
+                    .stamp(s3Service.getImageUrl(participant.getEvent().getStamp()))
                     .build());
         }
 
